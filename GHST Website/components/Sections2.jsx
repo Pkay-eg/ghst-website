@@ -380,16 +380,20 @@ Object.assign(window, { Multichain });
 // ─── STATS STRIP ───
 function StatsStrip() {
   const stats = useOnchainStats();
+  const age = useLiveAge(stats?.updatedAt);
   const supplyFmt = stats?.totalSupply != null ? fmtCedi(stats.totalSupply, { compact: true }) : "—";
   const holdersFmt = stats?.holders != null ? fmtInt(stats.holders) : "—";
+  const volumeFmt = stats?.volume24h != null ? fmtCedi(stats.volume24h, { compact: true }) : "—";
+  const liveLabel = stats?.updatedAt ? `Updated ${age || "just now"}` : "Connecting…";
+
   return (
     <section className="section-tight">
       <div className="container">
         <div className="stats-strip">
           <div className="stat-cell">
-            <div className="stat-label">In Circulation</div>
+            <div className="stat-label">Total Supply</div>
             <div className="stat-value">{supplyFmt}</div>
-            <div className="stat-delta">Live on Base</div>
+            <div className="stat-delta">{liveLabel}</div>
           </div>
           <div className="stat-cell">
             <div className="stat-label">Holders</div>
@@ -397,14 +401,14 @@ function StatsStrip() {
             <div className="stat-delta">Onchain</div>
           </div>
           <div className="stat-cell">
+            <div className="stat-label">24h Volume</div>
+            <div className="stat-value">{volumeFmt}</div>
+            <div className="stat-delta">Transfer volume</div>
+          </div>
+          <div className="stat-cell">
             <div className="stat-label">Avg. Settlement</div>
             <div className="stat-value">3.2 s</div>
             <div className="stat-delta">on Base</div>
-          </div>
-          <div className="stat-cell">
-            <div className="stat-label">Tx Fee</div>
-            <div className="stat-value">$0.000005</div>
-            <div className="stat-delta">near-zero</div>
           </div>
         </div>
       </div>

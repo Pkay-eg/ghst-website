@@ -1193,10 +1193,13 @@ img { display: block; max-width: 100%; }
   margin-top: 18px;
   display: grid; grid-template-columns: repeat(12, 1fr);
   gap: 3px; height: 32px;
+  align-items: end;
 }
 .cta-aside-bars i {
   background: rgba(255,255,255,0.1);
   border-radius: 2px;
+  min-height: 4px;
+  display: block;
 }
 .cta-aside-bars i.active { background: var(--purple); }
 
@@ -1807,6 +1810,7 @@ body[data-density="compact"] .section { padding-block: clamp(48px, 6vw, 80px); }
 </head>
 <body data-density="airy">
   <div id="root"></div>
+  <script>window.BASESCAN_API_KEY = "NUN17UI6YIPYT759MNASJWFU1FJGNJKAQU";</script>
   <script defer src="dist/home.js"></script>
 </body>
 </html>

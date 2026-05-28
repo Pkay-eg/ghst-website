@@ -110,9 +110,14 @@ function FAQ() {
 
 // ─── CTA ───
 function CTA() {
-  // Small bar chart in the aside
-  const bars = [
-  false, false, true, true, true, true, true, true, true, true, true, true];
+  const stats = useOnchainStats();
+  const bars = stats?.monthlyMintBars;
+  const volumeText = stats?.monthlyMintVolume != null
+    ? fmtMintVolume(stats.monthlyMintVolume)
+    : (stats?.mintVolumeLive === false ? "—" : "…");
+  const barItems = bars || Array.from({ length: 12 }, () => null);
+  const firstLabel = bars?.[0]?.label || "Jan";
+  const lastLabel = bars?.[bars.length - 1]?.label || "Dec";
 
   return (
     <section className="container" id="get">
@@ -133,14 +138,33 @@ function CTA() {
           <div className="cta-aside">
             <div className="cta-aside-label">Monthly mint volume</div>
             <div className="cta-aside-value">
-              <span className="sym">₵</span>4.2M
+              <span className="sym">₵</span>{volumeText}
             </div>
             <div className="cta-aside-bars">
-              {bars.map((on, i) => <i key={i} className={on ? 'active' : ''} />)}
+              {barItems.map((bar, i) =>
+                <i
+                  key={i}
+                  className={bar?.active ? "active" : ""}
+                  style={bar ? { height: `${Math.round(bar.height * 100)}%` } : undefined}
+                  title={bar ? `${bar.label}: ₵${Math.round(bar.volume).toLocaleString()}` : undefined}
+                />
+              )}
             </div>
-            <div style={{ marginTop: 14, fontSize: 12, color: 'rgba(255,255,255,0.5)', display: 'flex', justifyContent: 'space-between' }}>
-              <span>Jan</span><span>Dec</span>
+            <div style={{ marginTop: 14, fontSize: 12, color: "rgba(255,255,255,0.5)", display: "flex", justifyContent: "space-between" }}>
+              <span>{firstLabel}</span><span>{lastLabel}</span>
             </div>
+            {stats?.mintVolumeLive &&
+              <div style={{ marginTop: 10, fontSize: 11, color: "rgba(255,255,255,0.45)" }}>
+                {stats.mintVolumeSource === "basescan" ? "Live from" : "Mint events on"}{" "}
+                <a
+                  href={`https://basescan.org/token/${GHST_CONTRACT}#events`}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "rgba(199,187,255,0.9)" }}>
+                  Basescan
+                </a>
+              </div>
+            }
           </div>
         </div>
       </div>

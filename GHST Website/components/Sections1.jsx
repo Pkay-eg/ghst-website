@@ -144,6 +144,13 @@ function PartnerStrip() {
 
 // ─── TRUST GRID ───
 function TrustGrid() {
+  const stats = useOnchainStats();
+  const age = useLiveAge(stats?.updatedAt);
+  const live = stats?.totalSupply != null;
+  const supplyMeta = live ? fmtCedi(stats.totalSupply, { compact: true }) : "…";
+  const asOfMeta = stats?.updatedAt ? (age || "just now") : "…";
+  const attestMeta = stats?.updatedAt ? (age || "just now") : "…";
+
   return (
     <section className="section" id="trust">
       <div className="container">
@@ -163,7 +170,7 @@ function TrustGrid() {
             visual={<RatioDiagram />}
             title="1:1 fully reserved"
             body="Cash reserves sit in trust accounts at UMB Ghana and OmniBSIC. Treasury reserves are managed by Constant Capital. No fractional reserves."
-            meta={[["Reserve ratio", "100.0%"], ["As of", "12s ago"]]} />
+            meta={[["Reserve ratio", "100.0%"], ["Onchain supply", supplyMeta], ["As of", asOfMeta]]} />
           
           <TrustCard
             visual={<ComplianceDiagram />}
@@ -172,10 +179,10 @@ function TrustGrid() {
             meta={[["Attestor", "BNA"], ["Cadence", "Monthly"]]} />
           
           <TrustCard
-            visual={<AttestationDiagram />}
+            visual={<AttestationDiagram ageLabel={attestMeta} />}
             title="Real-time attestation"
             body="Reserve composition is published onchain and refreshed continuously. Verify supply against backing at any moment."
-            meta={[["Attest. age", "< 1 min"], ["Method", "Onchain proof"]]} />
+            meta={[["Attest. age", attestMeta], ["Method", "Onchain proof"]]} />
           
         </div>
       </div>
@@ -258,7 +265,7 @@ function ComplianceDiagram() {
 
 }
 
-function AttestationDiagram() {
+function AttestationDiagram({ ageLabel = "…" }) {
   // Live waveform / pulse
   return (
     <svg viewBox="0 0 280 160" width="86%" height="86%">
@@ -286,7 +293,7 @@ function AttestationDiagram() {
       </g>
       <g transform="translate(190 122)">
         <rect width="70" height="22" rx="4" fill="#fff" stroke="#e0d8ff" />
-        <text x="35" y="15" textAnchor="middle" fontSize="10" fontWeight="500" fill="#555274">12s ago</text>
+        <text x="35" y="15" textAnchor="middle" fontSize="10" fontWeight="500" fill="#555274">{ageLabel}</text>
       </g>
     </svg>);
 

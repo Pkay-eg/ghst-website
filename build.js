@@ -43,6 +43,7 @@ const CROSS_IMPORTS = {
   },
   "Sections3.jsx": {
     "./Icons.jsx": ["ArrowRight", "Check", "Plus"],
+    "./Onchain.jsx": ["useOnchainStats", "fmtMintVolume", "GHST_CONTRACT"],
   },
   "AboutSections.jsx": {
     "./Icons.jsx": ["ArrowRight"],
