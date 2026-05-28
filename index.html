@@ -1,1205 +1,1812 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GHST — Ghana Cedis Token | The Digital Ghana Cedi</title>
-<meta name="description" content="GHST is a fiat-backed digital representation of the Ghana Cedi, fully backed 1:1 and built on blockchain infrastructure. A product of Cede Stable LTD.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GHST — The Ghana Cedi, onchain</title>
+<link rel="icon" type="image/png" href="assets/favicon-96x96.png" sizes="96x96" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --purple:#785AFF;
-  --purple-light:#C7BBFF;
-  --purple-dark:#5A3FCC;
-  --purple-bg:#F2EFFF;
-  --green:#007D6F;
-  --green-light:#3DBC95;
-  --orange:#FF5700;
-  --orange-light:#FFCCA7;
-  --blue:#0D72FF;
-  --ocean-blue:#0094C8;
-  --pink:#FF99CD;
-  --yellow:#FFF5DA;
-  --dark:#000000;
-  --dark-card:#1A1A2E;
-  --dark-surface:#2D2B55;
-  --white:#FFFFFF;
-  --gray-50:#FAFAFF;
-  --gray-100:#EFEFEF;
-  --gray-200:#BDBDBD;
-  --gray-400:#BDBDBD;
-  --gray-500:#4F4F4F;
-  --gray-600:#4F4F4F;
-  --radius:12px;
-  --radius-lg:20px;
-  --radius-xl:28px;
-  --shadow:0 2px 20px rgba(0,0,0,0.06);
-  --shadow-lg:0 8px 40px rgba(0,0,0,0.1);
-  --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+/* ─────────────────────────────────────────────────────────────
+   Kairos Design System — Colors & Type
+   Source: Figma "Kairos.fig" (Logo & Stylescape)
+   ───────────────────────────────────────────────────────────── */
+
+/* ─── FONTS ─────────────────────────────────────────────────────
+   Brand fonts are PP Mori (display, semibold/bold) and PP Neue
+   Montreal (display + UI). Both are commercial Pangram Pangram
+   fonts and not on Google Fonts. Until licensed font files are
+   provided, we substitute the closest free matches:
+     PP Mori          → "General Sans"   (Fontshare / GP)
+     PP Neue Montreal → "Manrope"        (Google Fonts) [+ for body]
+     Manrope          → "Manrope"        (Google Fonts) ✓ exact
+   ──────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap');
+
+/* ─── Licensed PP Neue Montreal (uploaded) ─── */
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./fonts/NeueMontreal-Light.otf") format("opentype");
+  font-weight: 300; font-style: normal; font-display: swap;
 }
-html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',sans-serif;color:var(--dark);background:var(--white);line-height:1.6;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Inter Tight',sans-serif;font-weight:500;line-height:1.2}
-a{text-decoration:none;color:inherit}
-img{max-width:100%;display:block}
-
-/* ========== NAV ========== */
-.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;transition:var(--transition)}
-.nav.scrolled{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);box-shadow:0 1px 0 var(--gray-200)}
-.nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Inter Tight',sans-serif;font-size:1.4rem;font-weight:600;color:var(--dark)}
-.nav-logo .logo-icon{width:38px;height:38px;background:var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:0.85rem;font-family:'Inter',sans-serif;letter-spacing:-0.5px}
-.nav-links{display:flex;align-items:center;gap:2rem}
-.nav-links a{font-size:0.9rem;font-weight:500;color:var(--gray-600);transition:var(--transition);position:relative}
-.nav-links a:hover,.nav-links a.active{color:var(--purple)}
-.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--purple);border-radius:2px}
-.nav-cta{background:var(--purple);color:var(--white) !important;padding:10px 24px;border-radius:100px;font-weight:600;font-size:0.85rem;transition:var(--transition)}
-.nav-cta:hover{background:var(--purple-dark);transform:translateY(-1px)}
-.mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
-.mobile-toggle span{display:block;width:24px;height:2px;background:var(--dark);margin:5px 0;transition:var(--transition)}
-
-/* ========== PAGES ========== */
-.page{display:none;min-height:100vh}
-.page.active{display:block}
-
-/* ========== HERO ========== */
-.hero{min-height:100vh;display:flex;align-items:center;padding:120px 2rem 80px;position:relative;overflow:hidden;background:linear-gradient(165deg,#1A1A2E 0%,#2D2B55 50%,#3D2B8A 100%)}
-.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:200%;background:radial-gradient(ellipse,rgba(120,90,255,0.15) 0%,transparent 70%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,rgba(26,26,46,0.5),transparent);pointer-events:none}
-.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(120,90,255,0.15);border:1px solid rgba(120,90,255,0.35);padding:8px 18px;border-radius:100px;font-size:0.8rem;font-weight:600;color:var(--purple);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:1.5rem}
-.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--purple);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.hero h1{font-size:clamp(2.5rem,5vw,4rem);color:var(--white);margin-bottom:1.5rem;letter-spacing:-1px}
-.hero h1 span{color:var(--purple)}
-.hero-sub{font-size:1.15rem;color:var(--gray-400);line-height:1.7;margin-bottom:2.5rem;max-width:520px}
-.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:100px;font-size:0.95rem;font-weight:600;transition:var(--transition);cursor:pointer;border:none;font-family:'Inter',sans-serif}
-.btn-primary{background:var(--purple);color:var(--white)}
-.btn-primary:hover{background:var(--purple-dark);transform:translateY(-2px);box-shadow:0 8px 30px rgba(120,90,255,0.3)}
-.btn-outline{background:transparent;color:var(--white);border:1.5px solid var(--gray-600)}
-.btn-outline:hover{border-color:var(--purple-light);color:var(--purple-light)}
-.hero-visual{position:relative;display:flex;justify-content:center;align-items:center}
-.hero-token{width:320px;height:320px;position:relative}
-.token-ring{position:absolute;inset:0;border:2px solid rgba(120,90,255,0.2);border-radius:50%;animation:spin 30s linear infinite}
-.token-ring:nth-child(2){inset:25px;border-color:rgba(120,90,255,0.12);animation-direction:reverse;animation-duration:25s}
-.token-ring:nth-child(3){inset:50px;border-color:rgba(120,90,255,0.08)}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.token-center{position:absolute;inset:70px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(120,90,255,0.4),0 0 120px rgba(199,187,255,0.2)}
-.token-symbol{font-family:'Inter Tight',sans-serif;font-size:2.2rem;font-weight:700;color:var(--white);letter-spacing:1px}
-.token-sub{font-size:0.7rem;color:rgba(255,255,255,0.6);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
-.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
-.hero-stat{text-align:center;padding:1.2rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius)}
-.hero-stat .value{font-family:'Inter Tight',sans-serif;font-size:1.5rem;font-weight:600;color:var(--purple-light)}
-.hero-stat .label{font-size:0.75rem;color:var(--gray-400);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
-
-/* ========== SECTION UTILITY ========== */
-.section{padding:100px 2rem}
-.section-dark{background:linear-gradient(165deg,#1A1A2E,#2D2B55);color:var(--white)}
-.section-gray{background:var(--purple-bg)}
-.section-green{background:var(--purple);color:var(--white)}
-.container{max-width:1280px;margin:0 auto}
-.section-label{font-size:0.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--purple);margin-bottom:0.75rem}
-.section-dark .section-label{color:var(--purple)}
-.section-title{font-size:clamp(2rem,3.5vw,3rem);margin-bottom:1rem;letter-spacing:-0.5px}
-.section-desc{font-size:1.05rem;color:var(--gray-500);max-width:640px;line-height:1.7}
-.section-dark .section-desc{color:var(--gray-400)}
-.section-header{text-align:center;margin-bottom:4rem}
-.section-header .section-desc{margin:0.75rem auto 0}
-
-/* ========== ABOUT / HOW IT WORKS ========== */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
-.about-text p{color:var(--gray-500);line-height:1.8;margin-bottom:1rem}
-.about-text p strong{color:var(--dark);font-weight:600}
-.peg-badge{display:inline-flex;align-items:center;gap:12px;background:var(--purple-bg);padding:14px 24px;border-radius:var(--radius);margin-top:1rem}
-.peg-badge .peg-icon{width:40px;height:40px;background:var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:0.8rem}
-.peg-badge span{font-weight:600;color:var(--purple);font-size:1.1rem}
-.how-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:3rem;position:relative}
-.how-steps::before{content:'';position:absolute;top:40px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--purple),var(--purple-light));opacity:0.3}
-.step{text-align:center;position:relative;z-index:1}
-.step-num{width:56px;height:56px;border-radius:50%;background:var(--dark);color:var(--purple);display:flex;align-items:center;justify-content:center;font-family:'Inter Tight',sans-serif;font-size:1.2rem;font-weight:600;margin:0 auto 1rem;border:2px solid var(--purple)}
-.section-dark .step-num{background:var(--dark-surface);border-color:rgba(199,187,255,0.5)}
-.step h4{font-size:0.95rem;margin-bottom:0.5rem}
-.step p{font-size:0.8rem;color:var(--gray-400);line-height:1.5}
-
-/* ========== FEATURE CARDS ========== */
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
-.feature-card{padding:2rem;border-radius:var(--radius-lg);border:1px solid var(--gray-200);transition:var(--transition);background:var(--white)}
-.feature-card:hover{border-color:var(--purple);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-.section-dark .feature-card{background:var(--dark-card);border-color:rgba(255,255,255,0.06)}
-.section-dark .feature-card:hover{border-color:rgba(120,90,255,0.3)}
-.feature-icon{width:52px;height:52px;border-radius:var(--radius);background:var(--purple-bg);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem}
-.section-dark .feature-icon{background:rgba(120,90,255,0.12)}
-.feature-card h3{font-size:1.15rem;margin-bottom:0.6rem}
-.feature-card p{font-size:0.9rem;color:var(--gray-500);line-height:1.6}
-.section-dark .feature-card p{color:var(--gray-400)}
-
-/* ========== 24-HOUR ECONOMY SECTION ========== */
-.economy-section{background:linear-gradient(165deg,#0D1B2A 0%,#1A1A2E 40%,#2D2B55 100%);position:relative;overflow:hidden}
-.economy-section::before{content:'';position:absolute;top:-30%;right:-10%;width:60%;height:160%;background:radial-gradient(ellipse,rgba(120,90,255,0.08) 0%,transparent 70%);pointer-events:none}
-.economy-section::after{content:'';position:absolute;bottom:-20%;left:-10%;width:50%;height:140%;background:radial-gradient(ellipse,rgba(0,125,111,0.06) 0%,transparent 70%);pointer-events:none}
-.economy-visual{display:flex;justify-content:center;margin-bottom:3.5rem;position:relative;z-index:1}
-.economy-clock{width:200px;height:200px;position:relative;display:flex;align-items:center;justify-content:center}
-.clock-ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(120,90,255,0.25);animation:spin 40s linear infinite}
-.clock-ring::before{content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:var(--purple)}
-.clock-ring-inner{position:absolute;inset:20px;border-radius:50%;border:1.5px dashed rgba(120,90,255,0.15);animation:spin 25s linear infinite reverse}
-.clock-center{display:flex;flex-direction:column;align-items:center;z-index:1}
-.clock-num{font-family:'Inter Tight',sans-serif;font-size:3rem;font-weight:800;background:linear-gradient(135deg,var(--purple-light),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.clock-sub{font-size:0.7rem;color:var(--gray-400);letter-spacing:3px;text-transform:uppercase;margin-top:6px}
-.economy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;position:relative;z-index:1}
-.economy-card{padding:2rem;border-radius:var(--radius-lg);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);transition:var(--transition)}
-.economy-card:hover{border-color:rgba(120,90,255,0.3);background:rgba(120,90,255,0.06);transform:translateY(-4px)}
-.economy-card .card-icon{width:52px;height:52px;border-radius:var(--radius);background:rgba(120,90,255,0.12);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem}
-.economy-card h3{font-size:1.15rem;color:var(--white);margin-bottom:0.6rem}
-.economy-card p{font-size:0.9rem;color:var(--gray-400);line-height:1.6}
-.economy-highlight{display:inline-flex;align-items:center;gap:10px;background:rgba(120,90,255,0.1);border:1px solid rgba(120,90,255,0.2);padding:12px 24px;border-radius:100px;margin-top:3rem;position:relative;z-index:1}
-.economy-highlight .pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--green-light);animation:pulse 2s infinite}
-.economy-highlight span{font-size:0.85rem;font-weight:600;color:var(--purple-light)}
-
-@media(max-width:1024px){
-  .economy-grid{grid-template-columns:repeat(2,1fr)}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./fonts/NeueMontreal-LightItalic.otf") format("opentype");
+  font-weight: 300; font-style: italic; font-display: swap;
 }
-@media(max-width:768px){
-  .economy-grid{grid-template-columns:1fr}
-  .economy-clock{width:160px;height:160px}
-  .clock-num{font-size:2.4rem}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./fonts/NeueMontreal-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./fonts/NeueMontreal-Italic.otf") format("opentype");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./fonts/NeueMontreal-Medium.otf") format("opentype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./fonts/NeueMontreal-MediumItalic.otf") format("opentype");
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./fonts/NeueMontreal-Bold.otf") format("opentype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./fonts/NeueMontreal-BoldItalic.otf") format("opentype");
+  font-weight: 700; font-style: italic; font-display: swap;
 }
 
-/* ========== TRANSPARENCY PAGE ========== */
-.transparency-hero{padding:140px 2rem 60px;background:linear-gradient(165deg,#1A1A2E,#3D2B8A);text-align:center}
-.transparency-hero h1{color:var(--white);font-size:clamp(2.2rem,4vw,3.2rem)}
-.transparency-hero p{color:var(--gray-400);max-width:600px;margin:1rem auto 0;font-size:1.05rem}
-.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:-40px;position:relative;z-index:5}
-.metric-card{background:var(--white);border-radius:var(--radius-lg);padding:2rem;text-align:center;box-shadow:var(--shadow-lg);border:1px solid var(--gray-100)}
-.metric-card .metric-label{font-size:0.8rem;color:var(--gray-500);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem}
-.metric-card .metric-value{font-family:'Inter Tight',sans-serif;font-size:2rem;font-weight:600;color:var(--purple)}
-.metric-card .metric-sub{font-size:0.8rem;color:var(--gray-400);margin-top:0.3rem}
+:root {
+  /* ─── BRAND COLORS (named per Figma stylescape) ─── */
+  --kairos-sherwood:    #053f33;   /* primary — deep forest green */
+  --kairos-spring-wood: #faf8ec;   /* primary cream / parchment */
+  --kairos-norway:      #9fcd9f;   /* soft sage */
+  --kairos-jade:        #13a96a;   /* vibrant action green */
+  --kairos-congress:    #065194;   /* deep blue */
+  --kairos-cello:       #1a395e;   /* navy */
+  --kairos-jagged-ice:  #c6e7ec;   /* pale aqua */
+  --kairos-coral-red:   #ff3c40;   /* alert red */
+  --kairos-tangerine:   #ffa16d;   /* warm accent */
+  --kairos-mexican-red: #9c232c;   /* deep red */
 
-.reserve-chart{background:var(--white);border-radius:var(--radius-xl);padding:3rem;box-shadow:var(--shadow);border:1px solid var(--gray-100);margin-top:3rem}
-.reserve-chart h3{font-size:1.5rem;margin-bottom:2rem}
-.reserve-bar{height:48px;border-radius:100px;overflow:hidden;display:flex;margin-bottom:1.5rem}
-.reserve-bar div{display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;color:var(--white)}
-.bar-tbills{background:var(--purple);flex:0.55}
-.bar-bonds{background:var(--green);flex:0.25}
-.bar-cash{background:var(--orange);flex:0.20;color:var(--white)}
-.reserve-legend{display:flex;gap:2rem;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--gray-600)}
-.legend-dot{width:12px;height:12px;border-radius:3px}
+  --kairos-black:       #000000;
+  --kairos-ink:         #1e1815;   /* near-black with warmth */
+  --kairos-white:       #ffffff;
 
-.attestation-section{margin-top:4rem}
-.attestation-section h3{font-size:1.5rem;margin-bottom:1.5rem}
-.attestation-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.attestation-card{padding:1.5rem;border:1px solid var(--gray-200);border-radius:var(--radius);transition:var(--transition);display:flex;align-items:center;gap:1rem}
-.attestation-card:hover{border-color:var(--purple);box-shadow:var(--shadow)}
-.att-icon{width:44px;height:44px;border-radius:var(--radius);background:var(--purple-bg);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
-.att-info h4{font-size:0.95rem;margin-bottom:2px}
-.att-info p{font-size:0.8rem;color:var(--gray-400)}
-.att-dl{margin-left:auto;color:var(--purple);font-size:1.2rem;flex-shrink:0}
+  /* ─── SEMANTIC SURFACES ─── */
+  --bg:               var(--kairos-spring-wood);
+  --bg-inverse:       var(--kairos-sherwood);
+  --bg-elevated:      var(--kairos-white);
+  --bg-subtle:        #f3f1e6;       /* spring-wood -2 */
+  --bg-overlay:       rgba(255,255,255,0.29);  /* glass / scrim */
 
-.contract-section{margin-top:3rem;background:var(--dark);border-radius:var(--radius-xl);padding:2.5rem;color:var(--white)}
-.contract-section h3{font-size:1.3rem;margin-bottom:1.5rem;color:var(--white)}
-.contract-row{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;background:var(--dark-surface);border-radius:var(--radius);margin-bottom:0.75rem;flex-wrap:wrap}
-.contract-network{font-weight:600;font-size:0.9rem;min-width:100px;display:flex;align-items:center;gap:8px}
-.contract-network .net-dot{width:8px;height:8px;border-radius:50%}
-.contract-address{font-family:monospace;font-size:0.85rem;color:var(--gray-400);word-break:break-all;flex:1}
-.contract-link{color:var(--purple);font-size:0.8rem;font-weight:600;white-space:nowrap}
-.contract-link:hover{text-decoration:underline}
+  /* ─── TEXT ─── */
+  --fg:               var(--kairos-ink);
+  --fg-muted:         #5b5651;
+  --fg-subtle:        #8a857f;
+  --fg-on-dark:       var(--kairos-spring-wood);
+  --fg-on-dark-muted: rgba(250,248,236,0.72);
+  --fg-brand:         var(--kairos-sherwood);
+  --fg-accent:        var(--kairos-jade);
 
-/* ========== PARTNERS PAGE ========== */
-.partners-hero{padding:140px 2rem 60px;background:var(--purple-bg);text-align:center}
-.partners-hero h1{font-size:clamp(2.2rem,4vw,3.2rem)}
-.partners-hero p{color:var(--gray-500);max-width:600px;margin:1rem auto 0;font-size:1.05rem}
-.partner-category{margin-bottom:3rem}
-.partner-category h3{font-size:1.3rem;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:2px solid var(--gray-200)}
-.partner-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
-.partner-card{padding:2rem;border-radius:var(--radius-lg);border:1px solid var(--gray-200);background:var(--white);transition:var(--transition)}
-.partner-card:hover{border-color:var(--purple);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
-.partner-role{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--purple-dark);margin-bottom:0.5rem}
-.partner-card h4{font-size:1.15rem;margin-bottom:0.5rem}
-.partner-card p{font-size:0.85rem;color:var(--gray-500);line-height:1.6}
-.partner-tag{display:inline-block;padding:4px 12px;background:var(--purple-bg);color:var(--purple);font-size:0.75rem;font-weight:600;border-radius:100px;margin-top:0.75rem}
+  /* ─── BORDERS / LINES ─── */
+  --line:             rgba(30,24,21,0.12);
+  --line-strong:      rgba(30,24,21,0.24);
+  --line-on-dark:     rgba(250,248,236,0.18);
+  --hairline:         var(--kairos-black);  /* 1.6px black hairlines used in stylescape */
 
-/* ========== USE CASES PAGE ========== */
-.usecases-hero{padding:140px 2rem 60px;background:linear-gradient(165deg,#1A1A2E,#3D2B8A);text-align:center}
-.usecases-hero h1{color:var(--white);font-size:clamp(2.2rem,4vw,3.2rem)}
-.usecases-hero p{color:var(--gray-400);max-width:600px;margin:1rem auto 0;font-size:1.05rem}
-.usecase-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:3rem}
-.usecase-card{padding:2.5rem;border-radius:var(--radius-xl);border:1px solid var(--gray-200);background:var(--white);transition:var(--transition)}
-.usecase-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-.usecase-icon{width:60px;height:60px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:1.2rem}
-.uc-remit .usecase-icon{background:#E8F5EE}
-.uc-merchant .usecase-icon{background:#FFF8E1}
-.uc-govt .usecase-icon{background:#E3F2FD}
-.uc-supply .usecase-icon{background:#FBE9E7}
-.uc-trade .usecase-icon{background:#F3E5F5}
-.uc-treasury .usecase-icon{background:#E0F7FA}
-.uc-defi .usecase-icon{background:#FFF3E0}
-.usecase-card h3{font-size:1.2rem;margin-bottom:0.6rem}
-.usecase-card p{font-size:0.9rem;color:var(--gray-500);line-height:1.7}
+  /* ─── STATUS ─── */
+  --success:          var(--kairos-jade);
+  --danger:           var(--kairos-coral-red);
+  --warning:          var(--kairos-tangerine);
+  --info:             var(--kairos-congress);
 
-.dev-section{background:var(--dark);border-radius:var(--radius-xl);padding:3rem;margin-top:4rem;color:var(--white)}
-.dev-section h3{font-size:1.5rem;margin-bottom:1rem}
-.dev-section p{color:var(--gray-400);margin-bottom:2rem}
-.code-block{background:var(--dark-surface);border-radius:var(--radius);padding:1.5rem;overflow-x:auto;font-family:monospace;font-size:0.85rem;line-height:1.8;color:var(--gray-400)}
-.code-block .kw{color:var(--purple)}
-.code-block .str{color:#7EC8A0}
-.code-block .comment{color:var(--gray-600)}
+  /* ─── TYPE FAMILIES ─── */
+  --font-display:     "General Sans", "PP Mori", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:        "Neue Montreal", "PP Neue Montreal", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body:        "Neue Montreal", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:        ui-monospace, "SF Mono", Menlo, monospace;
 
-/* ========== WHITEPAPER PAGE ========== */
-.wp-hero{padding:140px 2rem 60px;background:var(--purple-bg);text-align:center}
-.wp-hero h1{font-size:clamp(2.2rem,4vw,3.2rem)}
-.wp-hero p{color:var(--gray-500);max-width:600px;margin:1rem auto 0;font-size:1.05rem}
-.wp-content{display:grid;grid-template-columns:300px 1fr;gap:3rem;margin-top:3rem}
-.wp-sidebar{position:sticky;top:90px;align-self:start}
-.wp-toc{background:var(--white);border-radius:var(--radius-lg);padding:2rem;border:1px solid var(--gray-200);box-shadow:var(--shadow)}
-.wp-toc h4{font-size:0.95rem;margin-bottom:1rem;color:var(--purple)}
-.wp-toc ul{list-style:none}
-.wp-toc li{margin-bottom:0.5rem}
-.wp-toc a{font-size:0.85rem;color:var(--gray-500);padding:6px 12px;display:block;border-radius:6px;transition:var(--transition)}
-.wp-toc a:hover,.wp-toc a.active{background:var(--purple-bg);color:var(--purple)}
-.wp-download{margin-top:1.5rem}
-.wp-download .btn{width:100%;justify-content:center;background:var(--purple);color:var(--white);font-size:0.9rem;padding:14px}
-.wp-download .btn:hover{background:var(--purple-dark)}
-.wp-body{background:var(--white);border-radius:var(--radius-xl);padding:3rem;border:1px solid var(--gray-200);box-shadow:var(--shadow)}
-.wp-body h2{font-size:1.6rem;margin:2.5rem 0 1rem;color:var(--purple);padding-top:1.5rem;border-top:1px solid var(--gray-100)}
-.wp-body h2:first-child{border-top:none;margin-top:0;padding-top:0}
-.wp-body h3{font-size:1.2rem;margin:1.5rem 0 0.75rem}
-.wp-body p{color:var(--gray-600);line-height:1.8;margin-bottom:1rem}
-.wp-body .wp-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:0.9rem}
-.wp-body .wp-table th{background:var(--purple);color:var(--white);padding:12px 16px;text-align:left;font-weight:600}
-.wp-body .wp-table td{padding:12px 16px;border-bottom:1px solid var(--gray-100);color:var(--gray-600)}
-.wp-body .wp-table tr:hover td{background:var(--gray-50)}
+  /* ─── TYPE SCALE (px @ 1rem=16) ─── */
+  /* Display — Neue Montreal Medium, very tight tracking */
+  --t-display-xl:     clamp(72px, 9vw, 164px);  /* hero */
+  --t-display-lg:     clamp(56px, 7vw, 112px);  /* section opener */
+  --t-display-md:     clamp(40px, 5vw, 72px);
+  --t-display-sm:     clamp(32px, 4vw, 56px);
+  /* Headline */
+  --t-h1:             40px;
+  --t-h2:             32px;
+  --t-h3:             26px;
+  --t-h4:             20px;
+  /* Body */
+  --t-body-lg:        18px;
+  --t-body:           16px;
+  --t-body-sm:        14px;
+  --t-caption:        12px;
+  --t-eyebrow:        13px;  /* tracked uppercase label */
 
-/* ========== ECOSYSTEM PAGE ========== */
-.eco-hero{padding:140px 2rem 60px;background:linear-gradient(165deg,#1A1A2E,#3D2B8A);text-align:center}
-.eco-hero h1{color:var(--white);font-size:clamp(2.2rem,4vw,3.2rem)}
-.eco-hero p{color:var(--gray-400);max-width:600px;margin:1rem auto 0;font-size:1.05rem}
-.eco-categories{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:-30px;position:relative;z-index:5}
-.eco-cat{background:var(--white);border-radius:var(--radius-lg);padding:1.5rem;text-align:center;box-shadow:var(--shadow-lg);border:1px solid var(--gray-100);cursor:pointer;transition:var(--transition)}
-.eco-cat:hover,.eco-cat.active{border-color:var(--purple);box-shadow:0 4px 20px rgba(120,90,255,0.15)}
-.eco-cat.active{background:var(--purple-bg)}
-.eco-cat .eco-cat-icon{font-size:2rem;margin-bottom:0.5rem}
-.eco-cat h4{font-size:0.95rem}
-.eco-cat p{font-size:0.8rem;color:var(--gray-400)}
-.eco-listing{margin-top:3rem}
-.eco-listing h3{font-size:1.3rem;margin-bottom:1.5rem}
-.eco-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
-.eco-card{padding:2rem;border-radius:var(--radius-lg);border:1px solid var(--gray-200);background:var(--white);display:flex;align-items:flex-start;gap:1rem;transition:var(--transition)}
-.eco-card:hover{border-color:var(--purple);box-shadow:var(--shadow)}
-.eco-icon{width:50px;height:50px;border-radius:var(--radius);background:var(--gray-50);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
-.eco-info h4{font-size:1rem;margin-bottom:4px}
-.eco-info p{font-size:0.8rem;color:var(--gray-500);line-height:1.5}
-.eco-info .eco-tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.eco-tag{font-size:0.7rem;padding:3px 10px;background:var(--purple-bg);color:var(--purple);border-radius:100px;font-weight:600}
+  /* ─── TYPE TOKENS ─── */
+  --tracking-display: -0.03em;   /* PP Mori bold: -3% */
+  --tracking-tight:   -0.01em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;    /* eyebrow / labels */
+  --tracking-button:  0.083em;   /* CTA: 1.668px @ 20px */
 
-/* ========== FOOTER ========== */
-.footer{background:var(--dark);color:var(--white);padding:80px 2rem 40px}
-.footer-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
-.footer-brand p{color:var(--gray-400);font-size:0.9rem;line-height:1.7;margin-top:1rem;max-width:320px}
-.footer h4{font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--purple);margin-bottom:1.2rem}
-.footer ul{list-style:none}
-.footer li{margin-bottom:0.6rem}
-.footer a{color:var(--gray-400);font-size:0.9rem;transition:var(--transition)}
-.footer a:hover{color:var(--purple)}
-.footer-bottom{max-width:1280px;margin:3rem auto 0;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.8rem;color:var(--gray-500)}
+  --leading-display:  1.0;
+  --leading-snug:     1.07;
+  --leading-normal:   1.5;
+  --leading-relaxed:  1.55;
 
-/* ========== NETWORK BADGES ========== */
-.network-badges{display:flex;gap:0.75rem;margin-top:1.5rem;flex-wrap:wrap}
-.net-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;font-size:0.8rem;font-weight:600;border:1px solid rgba(255,255,255,0.1);color:var(--gray-400)}
-.net-badge .net-dot{width:6px;height:6px;border-radius:50%}
-.net-badge.base .net-dot{background:#0052FF}
-.net-badge.stellar .net-dot{background:#7B61FF}
+  --weight-regular:   400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
 
-/* ========== CTA BANNER ========== */
-.cta-banner{padding:100px 2rem;background:linear-gradient(135deg,var(--purple),var(--purple-dark));text-align:center}
-.cta-banner h2{color:var(--white);font-size:clamp(2rem,3.5vw,2.8rem);margin-bottom:1rem}
-.cta-banner p{color:rgba(255,255,255,0.7);max-width:560px;margin:0 auto 2rem;font-size:1.05rem}
-.cta-banner .btn-primary{background:var(--white);color:var(--purple);font-size:1rem;padding:16px 40px}
+  /* ─── RADII ─── */
+  --r-xs:   8px;
+  --r-sm:   16px;
+  --r-md:   26px;       /* card inner */
+  --r-lg:   40px;       /* card */
+  --r-xl:   50px;       /* large card */
+  --r-pill: 999px;      /* button / chip / orb */
 
-/* ========== RESPONSIVE ========== */
-@media(max-width:1024px){
-  .hero-inner{grid-template-columns:1fr;text-align:center}
-  .hero-sub{margin:0 auto 2.5rem}
-  .hero-actions{justify-content:center}
-  .hero-visual{margin-top:2rem}
-  .hero-stats{grid-template-columns:repeat(3,1fr)}
-  .features-grid{grid-template-columns:repeat(2,1fr)}
-  .about-grid{grid-template-columns:1fr}
-  .how-steps{grid-template-columns:repeat(3,1fr)}
-  .how-steps::before{display:none}
-  .metrics-row{grid-template-columns:repeat(2,1fr)}
-  .wp-content{grid-template-columns:1fr}
-  .wp-sidebar{position:static}
-  .eco-categories{grid-template-columns:repeat(3,1fr)}
-  .footer-grid{grid-template-columns:1fr 1fr}
+  /* ─── SPACING (4-pt base) ─── */
+  --s-1:  4px;  --s-2:  8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px;  --s-6: 24px;  --s-7: 32px; --s-8: 40px;
+  --s-9: 48px;  --s-10: 64px; --s-11: 80px; --s-12: 96px;
+
+  /* ─── ELEVATION ─── */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 4px 12px rgba(5,63,51,0.06);
+  --shadow-md: 0 10px 30px rgba(5,63,51,0.08);
+  --shadow-lg: 0 24px 60px rgba(5,63,51,0.14);
+  --shadow-glow: 0 0 60px rgba(5,63,51,0.22);
+
+  /* ─── MOTION ─── */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft:   cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:    160ms;
+  --dur:         260ms;
+  --dur-slow:    520ms;
+  --dur-pause:   900ms;   /* the brand "breath" */
 }
-@media(max-width:768px){
-  .nav-links{display:none;position:absolute;top:72px;left:0;right:0;background:var(--white);padding:1.5rem 2rem;flex-direction:column;box-shadow:var(--shadow-lg);gap:1rem}
-  .nav-links.open{display:flex}
-  .mobile-toggle{display:block}
-  .hero{padding:120px 1.5rem 60px}
-  .hero-token{width:240px;height:240px}
-  .token-center{inset:50px}
-  .hero-stats{grid-template-columns:1fr 1fr 1fr}
-  .hero-stat .value{font-size:1.2rem}
-  .features-grid{grid-template-columns:1fr}
-  .how-steps{grid-template-columns:repeat(2,1fr)}
-  .usecase-cards{grid-template-columns:1fr}
-  .attestation-grid{grid-template-columns:1fr}
-  .metrics-row{grid-template-columns:1fr 1fr}
-  .eco-categories{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr}
-  .section{padding:60px 1.5rem}
-  .partner-cards{grid-template-columns:1fr}
+
+/* ─── BASE ELEMENT TYPOGRAPHY ───────────────────────────────── */
+
+html { font-family: var(--font-body); color: var(--fg); background: var(--bg); }
+body { margin: 0; font-size: var(--t-body); line-height: var(--leading-normal); -webkit-font-smoothing: antialiased; }
+
+h1, .h1 {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--t-display-md);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
 }
-@media(max-width:480px){
-  .hero-stats{grid-template-columns:1fr}
-  .contract-row{flex-direction:column;align-items:flex-start}
+h2, .h2 {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--t-h1);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
 }
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--t-h3);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--t-h4);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+
+p, .body { font-size: var(--t-body); line-height: var(--leading-normal); margin: 0; }
+small, .caption { font-size: var(--t-caption); line-height: 1.4; color: var(--fg-muted); }
+
+.display-xl { font-family: var(--font-sans); font-weight: 500; font-size: var(--t-display-xl); line-height: var(--leading-display); letter-spacing: var(--tracking-display); }
+.display-lg { font-family: var(--font-display); font-weight: 700; font-size: var(--t-display-lg); line-height: var(--leading-snug); letter-spacing: var(--tracking-display); }
+.display-md { font-family: var(--font-sans); font-weight: 500; font-size: var(--t-display-md); line-height: var(--leading-display); letter-spacing: var(--tracking-tight); }
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--t-eyebrow);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.serif-quote {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: var(--t-h2);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-tight);
+}
+
+</style>
+<style>
+/* ─── GHST — Corporate. Inter Tight. White + #785AFF. ─── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --purple: #785AFF;
+  --purple-deep: #5d3fe6;
+  --purple-darker: #4326c9;
+  --purple-soft: #f5f3ff;
+  --purple-tint: #ebe5ff;
+  --purple-border: #e0d8ff;
+
+  --white: #ffffff;
+  --ink: #0a0822;          /* deep, slightly violet */
+  --ink-2: #1c1a3a;
+  --muted: #555274;
+  --subtle: #8c89a8;
+  --line: rgba(10,8,34,0.08);
+  --line-strong: rgba(10,8,34,0.14);
+  --bg-tint: #fafaff;
+  --positive: #16a34a;
+  --warn: #d97706;
+
+  --shadow-xs: 0 1px 2px rgba(10,8,34,0.04);
+  --shadow-sm: 0 2px 8px rgba(10,8,34,0.05);
+  --shadow-md: 0 8px 24px rgba(10,8,34,0.08);
+  --shadow-lg: 0 24px 56px rgba(10,8,34,0.10);
+  --shadow-purple: 0 12px 28px rgba(120,90,255,0.22);
+
+  --font: "Inter Tight", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  /* compat aliases (kept so old refs don't error) */
+  --ghst-green: var(--purple);
+  --ghst-cream: var(--white);
+  --ghst-ink: var(--ink);
+  --ghst-subtle: var(--purple-soft);
+
+  --container: 1240px;
+  --gutter: clamp(20px, 4vw, 40px);
+
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 220ms;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  background: var(--white); color: var(--ink);
+  font-family: var(--font);
+  font-feature-settings: "cv11", "ss01", "ss03";
+}
+body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+* { font-family: var(--font); }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+img { display: block; max-width: 100%; }
+
+.container { max-width: var(--container); margin: 0 auto; padding-inline: var(--gutter); }
+
+/* ────────── NAV ────────── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: saturate(1.4) blur(16px);
+  -webkit-backdrop-filter: saturate(1.4) blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.nav-logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 600; font-size: 18px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.nav-logo-mark {
+  width: 30px; height: 30px; border-radius: 7px;
+  background: url("assets/apple-touch-icon.png") center/cover no-repeat;
+  flex-shrink: 0;
+}
+.nav-logo-mark::after { content: none; }
+.nav-links {
+  display: flex; gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+.nav-links a { transition: color var(--dur) var(--ease-out); }
+.nav-links a:hover { color: var(--purple); }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
+.nav-link-secondary {
+  font-size: 14px; font-weight: 500; color: var(--ink-2);
+  white-space: nowrap;
+}
+.nav-link-secondary:hover { color: var(--purple); }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px;
+  border-radius: var(--r-md);
+  background: var(--ink); color: #fff;
+  font-weight: 500; font-size: 14px;
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease-out), transform 120ms var(--ease-out);
+}
+.nav-cta:hover { background: var(--purple); }
+.nav-cta:active { transform: scale(0.97); }
+
+@media (max-width: 900px) { .nav-links { display: none; } }
+
+/* ────────── BUTTONS ────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 22px;
+  border-radius: var(--r-md);
+  font-weight: 500; font-size: 15px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), transform 120ms var(--ease-out);
+}
+.btn:active { transform: scale(0.985); }
+.btn-primary {
+  background: var(--purple); color: #fff;
+  box-shadow: var(--shadow-purple);
+}
+.btn-primary:hover { background: var(--purple-deep); box-shadow: 0 16px 32px rgba(120,90,255,0.3); }
+.btn-ink { background: var(--ink); color: #fff; }
+.btn-ink:hover { background: #000; }
+.btn-ghost {
+  background: var(--white); color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-cream { background: var(--white); color: var(--purple); }
+.btn-cream:hover { background: var(--purple-soft); }
+.btn-outline-cream { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.45); }
+.btn-outline-cream:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+.btn-sm { padding: 8px 14px; font-size: 13px; }
+
+/* ────────── EYEBROWS ────────── */
+.eyebrow-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 12px 5px 10px;
+  border-radius: 999px;
+  background: var(--purple-soft);
+  border: 1px solid var(--purple-border);
+  font-size: 12px; color: var(--purple);
+  font-weight: 500; letter-spacing: 0;
+  white-space: nowrap;
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 999px;
+  background: var(--positive);
+  box-shadow: 0 0 0 3px rgba(22,163,74,0.15);
+  animation: live-pulse 2.2s var(--ease-out) infinite;
+  flex-shrink: 0;
+}
+@keyframes live-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(22,163,74,0); }
+}
+.eyebrow-label {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple);
+}
+
+/* ────────── TYPOGRAPHY ────────── */
+.display {
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--ink);
+}
+.display-xl { font-size: clamp(44px, 5.8vw, 78px); font-weight: 500; }
+.display-lg { font-size: clamp(36px, 4.6vw, 60px); font-weight: 500; }
+.display-md { font-size: clamp(28px, 3.4vw, 44px); font-weight: 500; line-height: 1.08; }
+.display em { font-style: normal; color: var(--purple); }
+.lede {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.55;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ────────── SECTIONS ────────── */
+.section { padding-block: clamp(72px, 9vw, 120px); }
+.section-tight { padding-block: clamp(48px, 6vw, 72px); }
+.section-dark {
+  background: var(--ink);
+  color: #fff;
+  position: relative;
+}
+.section-dark .display { color: #fff; }
+.section-dark .display em { color: var(--purple); }
+.section-dark .eyebrow-label { color: rgba(255,255,255,0.6); }
+.section-dark .lede { color: rgba(255,255,255,0.7); }
+.section-tint { background: var(--bg-tint); }
+
+/* ────────── HERO ────────── */
+.hero {
+  position: relative;
+  padding-top: clamp(40px, 6vw, 72px);
+  padding-bottom: clamp(56px, 8vw, 96px);
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 700px; height: 700px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(120,90,255,0.08) 0%, rgba(120,90,255,0) 60%);
+  pointer-events: none;
+}
+.hero-grid {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+@media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; } }
+.hero-copy { max-width: 620px; }
+.hero-copy h1 { margin-top: 20px; }
+.hero-copy p.lede {
+  margin-top: 24px;
+  max-width: 540px;
+}
+.hero-ctas { margin-top: 36px; display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-trust {
+  margin-top: 40px;
+  display: flex; gap: 28px; flex-wrap: wrap;
+  font-size: 13px; color: var(--subtle);
+}
+.hero-trust span {
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.hero-trust .tick {
+  width: 16px; height: 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 999px;
+  background: var(--purple-tint);
+  color: var(--purple);
+}
+
+/* ── Reserves preview card (hero right side) ── */
+.reserves-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  position: relative;
+}
+.reserves-card-head {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.reserves-card-title {
+  font-size: 13px; font-weight: 500;
+  color: var(--ink); letter-spacing: -0.005em;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.reserves-card-title .tag {
+  font-size: 10px; font-weight: 600;
+  background: var(--purple-soft);
+  color: var(--purple);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.reserves-card-meta {
+  font-size: 12px; color: var(--subtle);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.reserves-peg {
+  padding: 28px 24px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.peg-side .lbl {
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--subtle);
+  font-weight: 600; margin-bottom: 8px;
+}
+.peg-side .val {
+  font-size: 30px; letter-spacing: -0.035em;
+  font-weight: 500; color: var(--ink);
+  display: flex; align-items: baseline; gap: 4px;
+}
+.peg-side .val .sym { color: var(--purple); font-weight: 600; }
+.peg-equals {
+  width: 32px; height: 32px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 500;
+}
+.reserves-bars {
+  padding: 0 24px 20px;
+}
+.reserves-row {
+  display: flex; justify-content: space-between;
+  font-size: 13px; padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.reserves-row:first-of-type { border-top: none; }
+.reserves-row-l { color: var(--muted); display: inline-flex; align-items: center; gap: 8px; }
+.reserves-row-l .dot {
+  width: 6px; height: 6px; border-radius: 2px;
+  background: var(--purple);
+}
+.reserves-row-r { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.reserves-foot {
+  padding: 14px 24px;
+  background: var(--bg-tint);
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px;
+}
+.reserves-foot a {
+  color: var(--purple); font-weight: 500;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+
+/* ────────── PARTNER STRIP ────────── */
+.partner-strip {
+  padding-block: clamp(40px, 5vw, 64px);
+  border-block: 1px solid var(--line);
+  background: var(--bg-tint);
+}
+.partner-strip-label {
+  text-align: center;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--subtle);
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+  justify-items: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+@media (max-width: 760px) {
+  .partner-grid { grid-template-columns: repeat(3, 1fr); gap: 24px 16px; }
+}
+.partner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600; font-size: 17px;
+  color: var(--ink); opacity: 0.7;
+  letter-spacing: -0.025em;
+  transition: opacity var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+}
+.partner:hover { opacity: 1; color: var(--ink); }
+.partner-mark {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  object-fit: contain;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--line);
+  flex-shrink: 0;
+}
+.partner-name { white-space: nowrap; }
+@media (max-width: 520px) {
+  .partner-name { display: none; }
+  .partner-mark { width: 30px; height: 30px; }
+}
+
+/* ────────── TRUST GRID (Built for) ────────── */
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+@media (max-width: 900px) { .trust-grid { grid-template-columns: 1fr; } }
+.trust-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 28px;
+  display: flex; flex-direction: column;
+  min-height: 360px;
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.trust-card:hover {
+  border-color: var(--purple-border);
+  box-shadow: var(--shadow-sm);
+}
+.trust-art {
+  height: 180px;
+  margin: -12px -12px 24px;
+  border-radius: var(--r-lg);
+  background: var(--purple-soft);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.trust-card h3 {
+  font-size: 20px; font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink); margin: 0 0 8px;
+}
+.trust-card p {
+  font-size: 14px; line-height: 1.55;
+  color: var(--muted); margin: 0;
+  flex: 1;
+}
+.trust-card .trust-meta {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 12px; color: var(--subtle);
+  display: flex; justify-content: space-between;
+}
+.trust-card .trust-meta strong { color: var(--ink); font-weight: 500; }
+
+/* ────────── HOW IT WORKS ────────── */
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 48px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--white);
+}
+@media (max-width: 900px) { .how-grid { grid-template-columns: 1fr; } }
+.how-step {
+  padding: 32px 28px;
+  display: flex; flex-direction: column;
+  border-right: 1px solid var(--line);
+  position: relative;
+}
+.how-step:last-child { border-right: none; }
+@media (max-width: 900px) {
+  .how-step { border-right: none; border-bottom: 1px solid var(--line); }
+  .how-step:last-child { border-bottom: none; }
+}
+.how-num {
+  font-size: 12px; font-weight: 600;
+  color: var(--purple);
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.how-num::before {
+  content: "";
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--purple-soft);
+  border: 1px solid var(--purple-border);
+  display: inline-flex;
+}
+.how-art {
+  height: 140px; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-tint);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.how-step h3 {
+  font-size: 18px; font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.how-step p {
+  font-size: 14px; line-height: 1.55;
+  color: var(--muted); margin: 0;
+}
+
+/* ────────── RESERVES SECTION ────────── */
+.rsv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(40px, 5vw, 72px);
+  align-items: start;
+}
+@media (max-width: 960px) { .rsv-grid { grid-template-columns: 1fr; } }
+.rsv-detail {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.rsv-detail-head {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.rsv-detail-head h4 {
+  margin: 0; font-size: 14px; font-weight: 500;
+}
+.rsv-detail-body {
+  padding: 28px 24px;
+}
+.rsv-supply {
+  font-size: clamp(36px, 4.6vw, 56px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1; color: var(--ink);
+  display: flex; align-items: baseline; gap: 4px;
+}
+.rsv-supply .sym { color: var(--purple); font-weight: 600; }
+.rsv-meta {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 8px;
+}
+.rsv-meta .badge {
+  font-size: 11px; font-weight: 600;
+  background: rgba(22,163,74,0.1);
+  color: var(--positive);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+.rsv-chart {
+  margin-top: 24px;
+  height: 200px;
+  position: relative;
+}
+.rsv-chart svg { width: 100%; height: 100%; }
+
+.rsv-axis {
+  display: flex; justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.rsv-breakdown {
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
+  padding: 16px 24px 4px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.rsv-stat-label {
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--subtle);
+  font-weight: 600; margin-bottom: 4px;
+}
+.rsv-stat-value {
+  font-size: 18px; font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+
+.contract-bar {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  padding: 6px 6px 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color var(--dur) var(--ease-out);
+}
+.contract-bar:hover { border-color: var(--purple); }
+.contract-bar .chain {
+  background: var(--ink); color: #fff;
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.contract-bar .copy-btn {
+  background: var(--purple); color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.03em;
+  display: inline-flex; align-items: center; gap: 4px;
+  text-transform: uppercase;
+  font-family: var(--font);
+}
+
+/* ── RESERVE PARTNERS ── */
+.rsv-partners {
+  margin-top: 44px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.rsv-partners-label {
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--subtle);
+  font-weight: 600; margin-bottom: 18px;
+}
+.rsv-partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 24px;
+}
+@media (max-width: 520px) { .rsv-partners-grid { grid-template-columns: 1fr; } }
+.rsv-partner {
+  display: flex; align-items: center; gap: 12px;
+}
+.rsv-partner-mark {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--line);
+  flex-shrink: 0;
+  padding: 4px;
+}
+.rsv-partner-name {
+  font-size: 14px; font-weight: 500;
+  color: var(--ink); letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.rsv-partner-role {
+  font-size: 12px; color: var(--subtle);
+  margin-top: 2px;
+}
+
+/* ────────── MULTICHAIN ────────── */
+.chain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+@media (max-width: 900px) { .chain-grid { grid-template-columns: 1fr; } }
+
+.chain-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-xl);
+  padding: 28px;
+  display: flex; flex-direction: column;
+  min-height: 280px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--dur) var(--ease-out), background var(--dur) var(--ease-out);
+}
+.chain-card:hover {
+  border-color: rgba(120,90,255,0.5);
+  background: rgba(120,90,255,0.06);
+}
+.chain-card--live {
+  border-color: rgba(120,90,255,0.4);
+  background: rgba(120,90,255,0.08);
+}
+.chain-card--live::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--purple);
+}
+
+.chain-card-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 28px;
+}
+.chain-card-mark {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  padding: 6px;
+}
+.chain-card-mark img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+.chain-status {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.chain-status--live {
+  background: rgba(22,163,74,0.15);
+  color: #4ade80;
+  border: 1px solid rgba(22,163,74,0.3);
+}
+.chain-status--soon {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.chain-card-body { flex: 1; }
+.chain-name {
+  font-size: 26px; font-weight: 500;
+  letter-spacing: -0.025em;
+  color: #fff;
+  line-height: 1.1;
+}
+.chain-tagline {
+  font-size: 13px; color: rgba(255,255,255,0.55);
+  margin-top: 4px;
+}
+.chain-card p {
+  font-size: 14px; line-height: 1.55;
+  color: rgba(255,255,255,0.7);
+  margin: 20px 0 0;
+}
+.chain-card-foot {
+  margin-top: 24px; padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* ────────── STATS STRIP ────────── */
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--white);
+}
+@media (max-width: 760px) { .stats-strip { grid-template-columns: repeat(2, 1fr); } }
+.stat-cell {
+  padding: 28px 24px;
+  border-right: 1px solid var(--line);
+}
+.stat-cell:last-child { border-right: none; }
+@media (max-width: 760px) {
+  .stat-cell:nth-child(2) { border-right: none; }
+  .stat-cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+.stat-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--subtle); margin-bottom: 8px;
+  font-weight: 600;
+}
+.stat-value {
+  font-weight: 500;
+  font-size: clamp(24px, 2.6vw, 34px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.stat-delta {
+  font-size: 12px; margin-top: 8px;
+  color: var(--positive); font-weight: 500;
+}
+
+/* ────────── DEVELOPER SECTION ────────── */
+.dev-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(40px, 5vw, 72px);
+  align-items: center;
+}
+@media (max-width: 960px) { .dev-grid { grid-template-columns: 1fr; } }
+.code-window {
+  background: #0d0b22;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-mono);
+  border: 1px solid rgba(120,90,255,0.2);
+}
+.code-head {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; gap: 12px;
+}
+.code-dots { display: flex; gap: 6px; }
+.code-dots i {
+  width: 10px; height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+}
+.code-tab {
+  font-family: var(--font);
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  padding-left: 8px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  margin-left: 4px;
+}
+.code-body {
+  padding: 22px 24px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #e2dffa;
+  overflow-x: auto;
+}
+.code-body .kw { color: #ff7ab6; }
+.code-body .fn { color: #8ce4ff; }
+.code-body .str { color: #c5f6a8; }
+.code-body .num { color: #ffcb6b; }
+.code-body .com { color: #6b6890; font-style: italic; }
+.code-body .var { color: #c8b8ff; }
+
+/* ────────── FAQ ────────── */
+.faq-wrap {
+  max-width: 780px;
+  margin: 48px auto 0;
+}
+.faq-item {
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+.faq-item:first-child { border-top: 1px solid var(--line); }
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  background: none; border: none;
+  width: 100%; text-align: left;
+  padding: 0;
+}
+.faq-toggle {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform var(--dur) var(--ease-out), background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+}
+.faq-item.open .faq-toggle {
+  transform: rotate(45deg);
+  background: var(--purple); color: #fff; border-color: var(--purple);
+}
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height 380ms var(--ease-out), margin 380ms var(--ease-out);
+  color: var(--muted);
+  font-size: 15px; line-height: 1.6;
+  max-width: 68ch;
+}
+.faq-item.open .faq-a {
+  max-height: 400px;
+  margin-top: 12px;
+}
+
+/* ────────── CTA ────────── */
+.cta {
+  background: var(--ink);
+  color: #fff;
+  border-radius: var(--r-xl);
+  padding: clamp(48px, 6vw, 80px);
+  position: relative;
+  overflow: hidden;
+  margin-block: clamp(72px, 9vw, 120px);
+}
+.cta::before {
+  content: "";
+  position: absolute;
+  right: -200px; top: -200px;
+  width: 600px; height: 600px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(120,90,255,0.25) 0%, rgba(120,90,255,0) 60%);
+}
+.cta-inner {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 48px; align-items: center;
+}
+@media (max-width: 900px) { .cta-inner { grid-template-columns: 1fr; } }
+.cta h2 { color: #fff; max-width: 14ch; }
+.cta h2 em { color: var(--purple); }
+.cta .eyebrow-label { color: var(--purple); }
+.cta p {
+  color: rgba(255,255,255,0.7);
+  margin-top: 20px; max-width: 460px;
+  font-size: 17px; line-height: 1.55;
+}
+.cta-actions { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-aside {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-lg);
+  padding: 24px;
+}
+.cta-aside-label {
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.12em; color: rgba(255,255,255,0.55);
+  font-weight: 600; margin-bottom: 8px;
+}
+.cta-aside-value {
+  font-size: 32px; font-weight: 500;
+  letter-spacing: -0.03em;
+  display: flex; align-items: baseline; gap: 4px;
+}
+.cta-aside-value .sym { color: var(--purple); font-weight: 600; }
+.cta-aside-bars {
+  margin-top: 18px;
+  display: grid; grid-template-columns: repeat(12, 1fr);
+  gap: 3px; height: 32px;
+}
+.cta-aside-bars i {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+}
+.cta-aside-bars i.active { background: var(--purple); }
+
+/* ────────── FOOTER ────────── */
+.footer {
+  background: var(--white);
+  padding-block: 72px 32px;
+  border-top: 1px solid var(--line);
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.6fr repeat(3, 1fr);
+  gap: 48px;
+}
+@media (max-width: 860px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; } }
+.footer-col h4 {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--subtle);
+  margin: 0 0 16px;
+}
+.footer-col a {
+  display: block; font-size: 14px;
+  color: var(--ink-2);
+  margin-bottom: 10px;
+  transition: color var(--dur) var(--ease-out);
+}
+.footer-col a:hover { color: var(--purple); }
+.footer-brand p {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  max-width: 34ch; line-height: 1.55;
+}
+.footer-bottom {
+  margin-top: 56px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: var(--subtle);
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-socials {
+  display: flex; gap: 12px; margin-top: 20px;
+}
+.footer-socials a {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-2);
+  transition: border-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+}
+.footer-socials a:hover { border-color: var(--purple); color: var(--purple); }
+
+/* ────────── TWEAKS PANEL ────────── */
+.tweaks-panel {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  z-index: 100;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  width: 240px;
+  box-shadow: var(--shadow-lg);
+}
+.tweaks-panel h5 {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--subtle); margin: 0 0 12px; font-weight: 600;
+}
+.tweaks-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.tweaks-row label {
+  font-size: 11px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--subtle);
+  font-weight: 600;
+}
+.tweaks-row .tweaks-opts {
+  display: flex; gap: 3px;
+  background: var(--bg-tint);
+  border-radius: 8px;
+  padding: 3px;
+  border: 1px solid var(--line);
+}
+.tweaks-row button {
+  flex: 1; padding: 6px 10px;
+  font-size: 12px;
+  border: none; background: transparent;
+  color: var(--ink-2);
+  border-radius: 6px;
+  font-family: inherit;
+  font-weight: 500;
+  transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+}
+.tweaks-row button.active {
+  background: var(--ink); color: #fff;
+}
+
+/* ────────── ABOUT — COMPANY STRUCTURE ────────── */
+.structure-list {
+  margin-top: 48px;
+  border-top: 1px solid var(--line);
+}
+.structure-row {
+  display: grid;
+  grid-template-columns: 180px 220px 1fr;
+  gap: 32px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+@media (max-width: 760px) {
+  .structure-row { grid-template-columns: 1fr; gap: 6px; padding: 20px 0; }
+}
+.structure-role {
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.14em; font-weight: 600;
+  color: var(--purple);
+}
+.structure-org {
+  font-size: 18px; font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.structure-note {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ────────── ABOUT — LEADERSHIP ────────── */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+@media (max-width: 860px) { .team-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .team-grid { grid-template-columns: 1fr; } }
+
+.team-card {
+  display: flex; flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 24px;
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.team-card:hover {
+  border-color: var(--purple-border);
+  box-shadow: var(--shadow-sm);
+}
+.team-photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--purple-soft);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+.team-initials {
+  font-size: 44px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--purple);
+  opacity: 0.55;
+}
+.team-info { flex: 1; }
+.team-name {
+  font-size: 19px; font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.team-role {
+  font-size: 11px;
+  color: var(--purple);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  margin-bottom: 14px;
+}
+.team-info p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ────────── CONTACT FORM ────────── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(40px, 5vw, 72px);
+  align-items: start;
+  margin-top: 16px;
+}
+@media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+
+.contact-form {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: clamp(28px, 3vw, 40px);
+  display: grid;
+  gap: 22px;
+  box-shadow: var(--shadow-sm);
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+.form-field {
+  display: grid;
+  gap: 8px;
+}
+.form-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-2);
+}
+.form-label .req { color: var(--purple); margin-left: 2px; }
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--white);
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.contact-form textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.5;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--subtle);
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(120,90,255,0.15);
+}
+
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 4px;
+}
+.segmented button {
+  flex: 1 1 auto;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  color: var(--ink-2);
+  border-radius: 8px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+  white-space: nowrap;
+}
+.segmented button:hover { color: var(--ink); }
+.segmented button.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.form-actions .btn[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.form-hint {
+  font-size: 12px;
+  color: var(--subtle);
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Contact aside */
+.contact-aside {
+  display: grid;
+  gap: 28px;
+  padding: 4px 0;
+}
+.contact-aside-block {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.contact-aside-block:last-child { border-bottom: none; padding-bottom: 0; }
+.contact-aside-heading {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--purple);
+  margin-bottom: 12px;
+}
+.contact-aside-line {
+  font-size: 15px;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+.contact-aside-line a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--purple);
+}
+.contact-aside-line a:hover { color: var(--purple); }
+
+/* ────────── 24-HOUR ECONOMY ────────── */
+.economy-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: end;
+}
+@media (max-width: 860px) { .economy-head { grid-template-columns: 1fr; } }
+.economy-lede { max-width: 480px; }
+
+/* ── Timeline infographic ── */
+.timeline24 {
+  margin-top: 48px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: clamp(24px, 2.5vw, 36px);
+  box-shadow: var(--shadow-sm);
+}
+.timeline24-head {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.timeline24-title {
+  font-size: 14px; font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+.timeline24-legend {
+  display: flex; gap: 20px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.timeline24-legend span {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.legend-swatch {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+}
+.legend-bank { background: var(--purple-tint); }
+.legend-ghst { background: var(--purple); }
+
+.timeline-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.timeline-row:last-of-type { border-bottom: none; }
+@media (max-width: 720px) {
+  .timeline-row { grid-template-columns: 1fr; gap: 12px; }
+}
+
+.timeline-label-name {
+  font-size: 14px; font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.timeline-label-meta {
+  font-size: 12px; color: var(--subtle);
+  margin-top: 2px;
+}
+
+.timeline-track {
+  position: relative;
+  height: 36px;
+  background: var(--bg-tint);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.timeline-bar {
+  position: absolute;
+  top: 0; bottom: 0;
+  border-radius: 6px;
+  display: flex; align-items: center;
+  padding: 0 12px;
+}
+.timeline-bar--bank {
+  background: var(--purple-tint);
+  border: 1px solid var(--purple-border);
+}
+.timeline-bar--bank .bar-label {
+  font-size: 11px; font-weight: 600;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.timeline-bar--ghst {
+  background: var(--purple);
+}
+.timeline-bar--ghst .bar-label {
+  font-size: 11px; font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  position: relative; z-index: 2;
+}
+
+.pulse {
+  position: absolute;
+  top: 50%; transform: translate(-50%, -50%);
+  width: 6px; height: 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 0 0 0 rgba(255,255,255,0.7);
+  animation: tx-pulse 2.4s ease-out infinite;
+}
+@keyframes tx-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); opacity: 1; }
+  100% { box-shadow: 0 0 0 14px rgba(255,255,255,0); opacity: 0.4; }
+}
+
+.timeline-now {
+  position: absolute;
+  top: -6px; bottom: -6px;
+  width: 2px;
+  background: var(--ink);
+  z-index: 3;
+}
+.timeline-now-dot {
+  position: absolute;
+  top: -4px; left: 50%; transform: translateX(-50%);
+  width: 8px; height: 8px;
+  border-radius: 999px;
+  background: var(--ink);
+}
+
+.timeline-scale {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+}
+@media (max-width: 720px) { .timeline-scale { grid-template-columns: 1fr; } .timeline-scale > :first-child { display: none; } }
+.timeline-scale > :first-child { /* spacer */ }
+.timeline-scale-track {
+  position: relative;
+  height: 18px;
+  grid-column: 2;
+}
+.timeline-scale-track .tick {
+  position: absolute;
+  top: 0;
+  width: 1px; height: 6px;
+  background: var(--line-strong);
+}
+.timeline-scale-track .tick-major {
+  height: 8px;
+  background: var(--ink-2);
+}
+.tick-label {
+  position: absolute;
+  top: 12px; left: 50%; transform: translateX(-50%);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--subtle);
+  white-space: nowrap;
+}
+
+/* ── Use case grid ── */
+.economy-grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 860px) { .economy-grid { grid-template-columns: 1fr; } }
+
+.economy-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 24px;
+  display: flex; flex-direction: column;
+  min-height: 380px;
+  transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+}
+.economy-card:hover { border-color: var(--purple-border); box-shadow: var(--shadow-sm); }
+
+.economy-card-visual {
+  height: 88px;
+  margin-bottom: 20px;
+  display: flex; align-items: center;
+}
+.economy-card-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 10px;
+}
+.economy-card h3 {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 10px;
+  line-height: 1.18;
+}
+.economy-card p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 24px;
+  flex: 1;
+}
+.economy-card-stat {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  display: flex; align-items: baseline; gap: 10px;
+}
+.economy-stat-value {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.economy-stat-label {
+  font-size: 12px;
+  color: var(--subtle);
+}
+
+/* ── Uptime strip ── */
+.uptime-strip {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--ink);
+  color: #fff;
+}
+@media (max-width: 720px) { .uptime-strip { grid-template-columns: repeat(2, 1fr); } }
+
+.uptime-cell {
+  padding: 24px 20px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.uptime-cell:last-child { border-right: none; }
+@media (max-width: 720px) {
+  .uptime-cell:nth-child(2) { border-right: none; }
+  .uptime-cell:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,0.08); }
+}
+.uptime-value {
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+.uptime-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+
+/* density tweak */
+body[data-density="airy"] .section { padding-block: clamp(96px, 12vw, 160px); }
+body[data-density="compact"] .section { padding-block: clamp(48px, 6vw, 80px); }
+
 </style>
 </head>
-<body>
-
-<!-- ========== NAVIGATION ========== -->
-<nav class="nav" id="mainNav">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo" onclick="showPage('home');return false">
-      <div class="logo-icon">GH</div>
-      GHST
-    </a>
-    <div class="nav-links" id="navLinks">
-      <a href="#" onclick="showPage('home');return false" class="active" data-page="home">Home</a>
-      <a href="#" onclick="showPage('transparency');return false" data-page="transparency">Transparency</a>
-      <a href="#" onclick="showPage('partners');return false" data-page="partners">Partners</a>
-      <a href="#" onclick="showPage('usecases');return false" data-page="usecases">Use Cases</a>
-      <a href="#" onclick="showPage('whitepaper');return false" data-page="whitepaper">Whitepaper</a>
-      <a href="#" onclick="showPage('ecosystem');return false" data-page="ecosystem">Ecosystem</a>
-      <a href="#" onclick="showPage('ecosystem');return false" class="nav-cta">Get GHST</a>
-    </div>
-    <button class="mobile-toggle" onclick="toggleNav()">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- ================================================================ -->
-<!-- HOME PAGE -->
-<!-- ================================================================ -->
-<div class="page active" id="page-home">
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-badge"><span class="dot"></span> Live on Base &bull; Coming to Stellar</div>
-        <h1>The <span>Ghana Cedi</span>,<br>on the blockchain.</h1>
-        <p class="hero-sub">GHST is a fiat-backed digital representation of the Ghana Cedi &mdash; fully backed 1:1, regulated, and built for the future of African payments. A product of Cede Stable LTD.</p>
-        <div class="hero-actions">
-          <a href="#" class="btn btn-primary" onclick="showPage('ecosystem');return false">Get GHST &rarr;</a>
-          <a href="#" class="btn btn-outline" onclick="showPage('whitepaper');return false">Read Whitepaper</a>
-        </div>
-        <div class="network-badges">
-          <span class="net-badge base"><span class="net-dot"></span> Base</span>
-          <span class="net-badge stellar"><span class="net-dot"></span> Stellar (Coming Soon)</span>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-token">
-          <div class="token-ring"></div>
-          <div class="token-ring"></div>
-          <div class="token-ring"></div>
-          <div class="token-center">
-            <div class="token-symbol">GH&#8373;</div>
-            <div class="token-sub">1 GHST = 1 GHS</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="value">1 : 1</div><div class="label">Cedi Peg</div></div>
-        <div class="hero-stat"><div class="value">100%</div><div class="label">Reserve Backed</div></div>
-        <div class="hero-stat"><div class="value">3-5s</div><div class="label">Settlement</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="section">
-    <div class="container">
-      <div class="about-grid">
-        <div>
-          <div class="section-label">What is GHST</div>
-          <h2 class="section-title">The next generation of the Ghana Cedi.</h2>
-          <div class="about-text">
-            <p>The Ghana Cedis Token (GHST) is a <strong>fiat-backed stablecoin</strong> pegged 1:1 to the Ghana Cedi. Every token in circulation is backed by an equivalent amount of Ghana Cedis held in a segregated custodial account at a Bank of Ghana-licensed commercial bank.</p>
-            <p>GHST brings the reliability of the Cedi together with the speed, transparency, and programmability of blockchain technology &mdash; enabling instant, near-zero-cost payments for Ghanaians everywhere.</p>
-          </div>
-          <div class="peg-badge">
-            <div class="peg-icon">&#8373;</div>
-            <span>1 GHST = 1 Ghana Cedi &mdash; Always.</span>
-          </div>
-        </div>
-        <div>
-          <div class="features-grid" style="grid-template-columns:1fr 1fr">
-            <div class="feature-card">
-              <div class="feature-icon">&#9889;</div>
-              <h3>Near-Zero Fees</h3>
-              <p>~$0.000005 per transaction vs 1-4% for mobile money and 6-7% for remittances.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">&#128274;</div>
-              <h3>Bank-Grade Security</h3>
-              <p>Fireblocks MPC custody protecting $10T+ in digital assets globally.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">&#127758;</div>
-              <h3>Global Reach</h3>
-              <p>475,000+ on/off-ramp access points via the Stellar Anchor Platform.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">&#128220;</div>
-              <h3>Full Compliance</h3>
-              <p>Chainalysis KYT for real-time AML monitoring across all transactions.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="section section-dark">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-label">How It Works</div>
-        <h2 class="section-title" style="color:var(--white)">Mint, transfer, redeem &mdash; in seconds.</h2>
-        <p class="section-desc">The mint-and-burn lifecycle ensures the total supply always equals the Ghana Cedis held in reserve.</p>
-      </div>
-      <div class="how-steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <h4 style="color:var(--white)">Deposit</h4>
-          <p>Deposit GHS via bank transfer, mobile money, or agent network.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <h4 style="color:var(--white)">Verify</h4>
-          <p>Banking partner confirms receipt; system verifies via API webhook.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <h4 style="color:var(--white)">Mint</h4>
-          <p>Equivalent GHST tokens are minted and credited to your wallet.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <h4 style="color:var(--white)">Transfer</h4>
-          <p>Send GHST to any wallet, pay merchants, or hold as digital savings.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">5</div>
-          <h4 style="color:var(--white)">Redeem</h4>
-          <p>Burn GHST to receive GHS back via bank transfer or mobile money.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY GHST -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-label">Why GHST</div>
-        <h2 class="section-title">Built for the Ghanaian economy.</h2>
-        <p class="section-desc">GHST represents the natural evolution of money in Ghana &mdash; from physical cash to bank deposits, mobile money, and now tokenized currency.</p>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">&#128176;</div>
-          <h3>Remittance Revolution</h3>
-          <p>Reduce diaspora remittance costs from 6-7% to under 1% on $4.6B in annual flows, saving families $230M-$300M per year.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#128722;</div>
-          <h3>Merchant Payments</h3>
-          <p>Near-zero fees and instant settlement empower SMEs and informal traders to accept digital payments at negligible cost.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#127981;</div>
-          <h3>Government Disbursements</h3>
-          <p>Social welfare, subsidies, and emergency relief disbursed with full transparency via programmable smart contracts.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#9878;</div>
-          <h3>Cedi Stability</h3>
-          <p>A credible Cedi-denominated digital asset reduces dollarization pressure and supports the BoG's currency stability objectives.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#127760;</div>
-          <h3>Pan-African Trade</h3>
-          <p>Positions Ghana as a leader in AfCFTA implementation with blockchain-based cross-border trade settlement.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">&#128200;</div>
-          <h3>Financial Inclusion</h3>
-          <p>Extends financial services to anyone with internet access &mdash; no SIM card, bank account, or agent network required.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 24-HOUR ECONOMY -->
-  <section class="section economy-section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-label">Digital Cedi &times; 24-Hour Economy</div>
-        <h2 class="section-title" style="color:var(--white)">The financial backbone of Ghana&rsquo;s 24&#8209;hour economy.</h2>
-        <p class="section-desc">President Mahama&rsquo;s vision for a round-the-clock economy demands money that never sleeps. GHST provides the always-on, instant payment infrastructure that makes a true 24-hour economy possible.</p>
-      </div>
-      <div class="economy-visual">
-        <div class="economy-clock">
-          <div class="clock-ring"></div>
-          <div class="clock-ring-inner"></div>
-          <div class="clock-center">
-            <span class="clock-num">24/7</span>
-            <span class="clock-sub">365 days</span>
-          </div>
-        </div>
-      </div>
-      <div class="economy-grid">
-        <div class="economy-card">
-          <div class="card-icon">&#128336;</div>
-          <h3>Always-On Payments</h3>
-          <p>Unlike banks with closing hours, GHST settles transactions 24/7/365 &mdash; enabling commerce at any hour of the day or night, no downtime.</p>
-        </div>
-        <div class="economy-card">
-          <div class="card-icon">&#127769;</div>
-          <h3>Night Economy Enablement</h3>
-          <p>Night markets, transport, healthcare, and emergency services can transact digitally without cash constraints after banking hours.</p>
-        </div>
-        <div class="economy-card">
-          <div class="card-icon">&#127757;</div>
-          <h3>Cross-Timezone Commerce</h3>
-          <p>Ghanaian businesses trading globally aren&rsquo;t limited by banking hours &mdash; settle with partners in any timezone, instantly.</p>
-        </div>
-        <div class="economy-card">
-          <div class="card-icon">&#9889;</div>
-          <h3>Instant Gig Payouts</h3>
-          <p>Ride-hailing drivers, delivery riders, and freelancers get paid the moment work is completed &mdash; not the next business day.</p>
-        </div>
-        <div class="economy-card">
-          <div class="card-icon">&#127978;</div>
-          <h3>SME Cash Flow</h3>
-          <p>Small businesses receive instant settlement around the clock, improving cash flow and enabling 24-hour operations without float delays.</p>
-        </div>
-        <div class="economy-card">
-          <div class="card-icon">&#128274;</div>
-          <h3>Safer Than Cash</h3>
-          <p>A cashless night economy is a safer economy &mdash; reducing robbery risk for late-night workers, businesses, and commuters.</p>
-        </div>
-      </div>
-      <div style="text-align:center">
-        <div class="economy-highlight">
-          <div class="pulse-dot"></div>
-          <span>GHST infrastructure is live and processing transactions now</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-banner">
-    <h2>Ready to experience the digital Cedi?</h2>
-    <p>Join the growing ecosystem of businesses and individuals using GHST for faster, cheaper, and more transparent payments.</p>
-    <a href="#" class="btn btn-primary" onclick="showPage('ecosystem');return false">Get GHST &rarr;</a>
-  </section>
-</div>
-
-<!-- ================================================================ -->
-<!-- TRANSPARENCY PAGE -->
-<!-- ================================================================ -->
-<div class="page" id="page-transparency">
-  <div class="transparency-hero">
-    <div class="container">
-      <div class="section-label">Transparency</div>
-      <h1>Trust, verified on-chain.</h1>
-      <p>GHST is always redeemable 1:1 for Ghana Cedis. Reserves are independently attested monthly and verifiable in real-time on the blockchain.</p>
-    </div>
-  </div>
-
-  <section class="section" style="padding-top:0">
-    <div class="container">
-      <div class="metrics-row">
-        <div class="metric-card">
-          <div class="metric-label">Exchange Rate</div>
-          <div class="metric-value">1 : 1</div>
-          <div class="metric-sub">1 GHST = 1 GHS</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Circulating Supply</div>
-          <div class="metric-value">&#8373; &mdash;</div>
-          <div class="metric-sub">Updated in real-time</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Total Wallets</div>
-          <div class="metric-value">&mdash;</div>
-          <div class="metric-sub">Unique holders</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Reserve Ratio</div>
-          <div class="metric-value">100%</div>
-          <div class="metric-sub">Fully collateralised</div>
-        </div>
-      </div>
-
-      <!-- Reserve Composition -->
-      <div class="reserve-chart">
-        <h3>Reserve Composition</h3>
-        <div class="reserve-bar">
-          <div class="bar-tbills">GoG T-Bills &middot; 55%</div>
-          <div class="bar-bonds">Corp. Bonds &middot; 25%</div>
-          <div class="bar-cash">Cash &middot; 20%</div>
-        </div>
-        <div class="reserve-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> Government of Ghana Treasury Bills (91 &amp; 182 day)</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Tier 1 Corporate Bonds</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div> Liquid Cash Deposits (min 20% buffer)</div>
-        </div>
-        <p style="margin-top:1.5rem;font-size:0.85rem;color:var(--gray-400)">All reserves held in a segregated, interest-bearing custodial account at a BoG-licensed commercial bank. Investment policy mirrors global stablecoin best practices.</p>
-      </div>
-
-      <!-- Attestation Reports -->
-      <div class="attestation-section">
-        <h3>Monthly Attestation Reports</h3>
-        <p style="color:var(--gray-500);margin-bottom:1.5rem;font-size:0.95rem">Independent monthly attestations by a BoG-approved auditor confirm 1:1 reserve backing for all GHST in circulation.</p>
-        <div class="attestation-grid">
-          <div class="attestation-card">
-            <div class="att-icon">&#128196;</div>
-            <div class="att-info"><h4>March 2026</h4><p>BNA Ghana &middot; Reserve Attestation</p></div>
-            <div class="att-dl">&#8595;</div>
-          </div>
-          <div class="attestation-card">
-            <div class="att-icon">&#128196;</div>
-            <div class="att-info"><h4>February 2026</h4><p>BNA Ghana &middot; Reserve Attestation</p></div>
-            <div class="att-dl">&#8595;</div>
-          </div>
-          <div class="attestation-card">
-            <div class="att-icon">&#128196;</div>
-            <div class="att-info"><h4>January 2026</h4><p>BNA Ghana &middot; Reserve Attestation</p></div>
-            <div class="att-dl">&#8595;</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contract Addresses -->
-      <div class="contract-section">
-        <h3>Contract Addresses</h3>
-        <p style="color:var(--gray-400);font-size:0.9rem;margin-bottom:1.5rem">Verify GHST on-chain. Click to view on the respective blockchain explorer.</p>
-        <div class="contract-row">
-          <div class="contract-network"><span class="net-dot" style="background:#0052FF"></span> Base</div>
-          <div class="contract-address">0x2094656c30C064EFae86C1fA1b87DdAB1f513fbb</div>
-          <a href="https://basescan.org/token/0x2094656c30C064EFae86C1fA1b87DdAB1f513fbb" target="_blank" class="contract-link">View on BaseScan &rarr;</a>
-        </div>
-        <div class="contract-row">
-          <div class="contract-network"><span class="net-dot" style="background:#7B61FF"></span> Stellar</div>
-          <div class="contract-address">Coming Soon</div>
-          <span class="contract-link" style="opacity:0.4">Pending Launch</span>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ================================================================ -->
-<!-- PARTNERS PAGE -->
-<!-- ================================================================ -->
-<div class="page" id="page-partners">
-  <div class="partners-hero">
-    <div class="container">
-      <div class="section-label">Partners</div>
-      <h1>Institutional partners powering GHST.</h1>
-      <p>GHST is built on a foundation of regulated banking relationships, institutional-grade technology, and independent oversight.</p>
-    </div>
-  </div>
-
-  <section class="section" style="padding-top:2rem">
-    <div class="container">
-
-      <div class="partner-category">
-        <h3>&#127970; Banking &amp; Custody</h3>
-        <div class="partner-cards">
-          <div class="partner-card">
-            <div class="partner-role">Banking Partner</div>
-            <h4>Omni Bank</h4>
-            <p>BoG-licensed commercial bank providing reserve custody, virtual accounts (NVAs), GhIPSS payment gateway access, and KYC processing for the GHST ecosystem.</p>
-            <span class="partner-tag">Reserve Custodian</span>
-          </div>
-          <div class="partner-card">
-            <div class="partner-role">Digital Asset Custody</div>
-            <h4>Fireblocks</h4>
-            <p>Institutional-grade MPC wallet infrastructure protecting $10T+ in digital assets across 2,400+ institutions globally. NYDFS-regulated trust company.</p>
-            <span class="partner-tag">MPC Custody</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="partner-category">
-        <h3>&#128269; Audit &amp; Compliance</h3>
-        <div class="partner-cards">
-          <div class="partner-card">
-            <div class="partner-role">Audit Firm</div>
-            <h4>BNA Ghana</h4>
-            <p>Independent BoG-approved auditor providing monthly reserve attestations confirming 1:1 backing of all GHST in circulation.</p>
-            <span class="partner-tag">Monthly Attestation</span>
-          </div>
-          <div class="partner-card">
-            <div class="partner-role">Blockchain Compliance</div>
-            <h4>Chainalysis</h4>
-            <p>Real-time Know Your Transaction (KYT) monitoring, sanctions screening, and behavioral analytics across 400+ blockchain networks and 50M+ tokens.</p>
-            <span class="partner-tag">AML Monitoring</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="partner-category">
-        <h3>&#128188; Asset Management &amp; Advisory</h3>
-        <div class="partner-cards">
-          <div class="partner-card">
-            <div class="partner-role">Asset Management</div>
-            <h4>Constants Capital Ghana</h4>
-            <p>Licensed Ghanaian asset management company advising on reserve investment strategy, including GoG Treasury Bills and Tier 1 corporate bonds allocation.</p>
-            <span class="partner-tag">Reserve Strategy</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="partner-category">
-        <h3>&#9889; Technology &amp; Blockchain</h3>
-        <div class="partner-cards">
-          <div class="partner-card">
-            <div class="partner-role">Blockchain Network</div>
-            <h4>Stellar Development Foundation</h4>
-            <p>Open-source blockchain network with 3-5 second settlement, ~$0.000005 per transaction, native regulatory controls, and 99.99% uptime over the past decade.</p>
-            <span class="partner-tag">Primary Network</span>
-          </div>
-          <div class="partner-card">
-            <div class="partner-role">Distribution Partner</div>
-            <h4>WeWire</h4>
-            <p>Digital asset technology company specializing in blockchain-based financial infrastructure, bridging traditional banking and decentralized finance for the African market.</p>
-            <span class="partner-tag">Distribution</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-</div>
-
-<!-- ================================================================ -->
-<!-- USE CASES PAGE -->
-<!-- ================================================================ -->
-<div class="page" id="page-usecases">
-  <div class="usecases-hero">
-    <div class="container">
-      <div class="section-label">Use Cases</div>
-      <h1 style="color:var(--white)">Build with the digital Cedi.</h1>
-      <p>GHST enables programmable, instant, and near-zero-cost payments across every sector of the Ghanaian economy and beyond.</p>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="container">
-      <div class="usecase-cards">
-        <div class="usecase-card uc-remit">
-          <div class="usecase-icon">&#127968;</div>
-          <h3>Cross-Border Remittances</h3>
-          <p>Ghana receives ~$4.6B in annual diaspora remittances with average fees of 6-7%. GHST reduces costs to under 1%, with instant settlement. Diaspora Ghanaians can purchase GHST abroad and send it instantly to family members who redeem it for Cedis via bank or mobile money.</p>
-        </div>
-        <div class="usecase-card uc-merchant">
-          <div class="usecase-icon">&#128722;</div>
-          <h3>Merchant Payments &amp; E-Commerce</h3>
-          <p>Merchants accept GHST payments with near-zero transaction fees and 3-5 second settlement. No more waiting days for card network settlement or paying 2-4% processing fees. Particularly transformative for SMEs and informal market traders.</p>
-        </div>
-        <div class="usecase-card uc-govt">
-          <div class="usecase-icon">&#127963;</div>
-          <h3>Government Disbursements</h3>
-          <p>Social welfare, agricultural subsidies, and emergency relief disbursed via GHST with full transparency. Smart contracts enforce conditional disbursement &mdash; for example, releasing funds upon verification of school attendance or agricultural planting.</p>
-        </div>
-        <div class="usecase-card uc-supply">
-          <div class="usecase-icon">&#128666;</div>
-          <h3>Supply Chain Finance</h3>
-          <p>Programmable trade settlement for agricultural and manufacturing supply chains. Smart contract-based escrow ensures cocoa farmers receive payment automatically upon verified delivery, reducing delays from weeks to seconds.</p>
-        </div>
-        <div class="usecase-card uc-trade">
-          <div class="usecase-icon">&#127758;</div>
-          <h3>Pan-African Trade (AfCFTA)</h3>
-          <p>GHST on the Stellar network with 475,000+ global access points positions Ghana as a leader in blockchain-based trade settlement. Exporters receive payments without correspondent banking delays or currency conversion costs.</p>
-        </div>
-        <div class="usecase-card uc-treasury">
-          <div class="usecase-icon">&#128176;</div>
-          <h3>Institutional Treasury</h3>
-          <p>Corporations hold GHST as a digital treasury instrument, earning yield from underlying GoG T-bill and bond investments while maintaining instant liquidity &mdash; available 24/7 with programmable cash management.</p>
-        </div>
-      </div>
-
-      <!-- DEVELOPER SECTION -->
-      <div class="dev-section">
-        <h3>&#128187; For Developers</h3>
-        <p>Integrate GHST into your application with the Stellar SDK. Smart contracts enable automated payments, escrow, conditional transfers, and payment splitting.</p>
-        <div class="code-block">
-<span class="comment">// Mint GHST - User deposits GHS, receives GHST tokens</span>
-<span class="kw">const</span> server = <span class="kw">new</span> StellarSdk.Server(<span class="str">'https://horizon.stellar.org'</span>);
-
-<span class="comment">// Send GHST to any Stellar wallet</span>
-<span class="kw">const</span> transaction = <span class="kw">new</span> StellarSdk.TransactionBuilder(account)
-  .addOperation(StellarSdk.Operation.payment({
-    destination: <span class="str">'GABCD...RECEIVER'</span>,
-    asset: <span class="kw">new</span> StellarSdk.Asset(<span class="str">'GHST'</span>, <span class="str">'GISSUER...'</span>),
-    amount: <span class="str">'1000.00'</span>
-  }))
-  .setTimeout(<span class="str">30</span>)
-  .build();
-
-<span class="comment">// Settlement in 3-5 seconds, fee ~$0.000005</span>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ================================================================ -->
-<!-- WHITEPAPER PAGE -->
-<!-- ================================================================ -->
-<div class="page" id="page-whitepaper">
-  <div class="wp-hero">
-    <div class="container">
-      <div class="section-label">Whitepaper</div>
-      <h1>GHST Technical Whitepaper</h1>
-      <p>A comprehensive overview of the Ghana Cedis Token &mdash; its design, economics, technology infrastructure, and regulatory framework.</p>
-    </div>
-  </div>
-
-  <section class="section" style="padding-top:2rem">
-    <div class="container">
-      <div class="wp-content">
-        <div class="wp-sidebar">
-          <div class="wp-toc">
-            <h4>Contents</h4>
-            <ul>
-              <li><a href="#" class="active">1. Introduction</a></li>
-              <li><a href="#">2. Product Overview</a></li>
-              <li><a href="#">3. Reserve Structure</a></li>
-              <li><a href="#">4. Technology Stack</a></li>
-              <li><a href="#">5. Compliance Framework</a></li>
-              <li><a href="#">6. Mint &amp; Burn Lifecycle</a></li>
-              <li><a href="#">7. Supported Networks</a></li>
-              <li><a href="#">8. Risk Management</a></li>
-              <li><a href="#">9. Roadmap</a></li>
-            </ul>
-          </div>
-          <div class="wp-download">
-            <a href="#" class="btn">&#8595; Download PDF</a>
-          </div>
-        </div>
-
-        <div class="wp-body">
-          <h2>1. Introduction</h2>
-          <p>The Ghana Cedis Token (GHST) is a fiat-backed digital asset representing the Ghana Cedi on blockchain infrastructure. Issued by Cede Stable LTD, GHST is designed to harness the efficiency, transparency, and programmability of blockchain-based payments while maintaining full monetary sovereignty, regulatory oversight, and the stability of the Ghana Cedi.</p>
-          <p>GHST operates on the same fundamental economic principles as existing licensed electronic money products in Ghana. The only substantive difference is the underlying technology infrastructure &mdash; blockchain rather than proprietary telecom systems.</p>
-
-          <h2>2. Product Overview</h2>
-          <table class="wp-table">
-            <tr><th>Attribute</th><th>Detail</th></tr>
-            <tr><td>Token Name</td><td>Ghana Cedis Token (GHST)</td></tr>
-            <tr><td>Peg</td><td>1 GHST = 1 Ghana Cedi (GHS) &mdash; fully redeemable</td></tr>
-            <tr><td>Reserve Backing</td><td>100% backed by GHS in segregated custodial account</td></tr>
-            <tr><td>Blockchain</td><td>Base (live), Stellar Network (planned multi-chain)</td></tr>
-            <tr><td>Issuer</td><td>Cede Stable LTD</td></tr>
-            <tr><td>Custody Technology</td><td>Fireblocks (MPC-secured institutional custody)</td></tr>
-            <tr><td>Compliance</td><td>Chainalysis (real-time transaction monitoring &amp; AML)</td></tr>
-          </table>
-
-          <h2>3. Reserve Structure</h2>
-          <p>Every GHST token in circulation is backed 1:1 by Ghana Cedis held in a segregated, interest-bearing custodial account at a Bank of Ghana-licensed commercial bank. Reserves are invested exclusively in:</p>
-          <table class="wp-table">
-            <tr><th>Component</th><th>Details</th></tr>
-            <tr><td>Reserve Ratio</td><td>100% (1 GHST = 1 GHS held in reserve at all times)</td></tr>
-            <tr><td>Investment Policy</td><td>Short-term GoG Treasury Bills (91 &amp; 182-day) and Tier 1 corporate bonds</td></tr>
-            <tr><td>Liquidity Buffer</td><td>Minimum 20% maintained in liquid cash for immediate redemptions</td></tr>
-            <tr><td>Attestation</td><td>Monthly independent attestation by a BoG-approved auditor</td></tr>
-            <tr><td>On-Chain Transparency</td><td>Total supply verifiable in real-time on the blockchain</td></tr>
-          </table>
-
-          <h2>4. Technology Stack</h2>
-          <table class="wp-table">
-            <tr><th>Layer</th><th>Provider</th><th>Function</th></tr>
-            <tr><td>Blockchain</td><td>Base / Stellar</td><td>Token issuance, transfer, and settlement</td></tr>
-            <tr><td>Custody</td><td>Fireblocks</td><td>MPC key management; eliminates single points of failure</td></tr>
-            <tr><td>Compliance</td><td>Chainalysis</td><td>Real-time alerts, sanctions screening, behavioral analytics</td></tr>
-            <tr><td>Banking</td><td>Omni Bank</td><td>Reserve custody, virtual accounts, GhIPSS integration</td></tr>
-            <tr><td>Application</td><td>Cede Stable</td><td>User-facing wallet, merchant portal, API integrations</td></tr>
-          </table>
-
-          <h2>5. Compliance Framework</h2>
-          <p>GHST is designed to operate within the full regulatory framework established by the Bank of Ghana. This includes alignment with the Virtual Asset Service Providers (VASP) Act 2025, the Anti-Money Laundering Act 2020, and the Data Protection Act 2012.</p>
-          <p>A multi-layered KYC/AML compliance framework implements tiered verification levels &mdash; from basic identification through enhanced due diligence &mdash; exceeding standards currently applied to mobile money operators.</p>
-
-          <h2>6. Mint &amp; Burn Lifecycle</h2>
-          <p>The mint-and-burn mechanism ensures the total supply of GHST always matches the reserves held in custody:</p>
-          <table class="wp-table">
-            <tr><th>Step</th><th>Action</th><th>Description</th></tr>
-            <tr><td>1</td><td>Deposit (Mint)</td><td>User deposits GHS into the designated custodial account</td></tr>
-            <tr><td>2</td><td>Verification</td><td>Banking partner confirms receipt via API webhook</td></tr>
-            <tr><td>3</td><td>Token Issuance</td><td>Equivalent GHST minted on-chain and credited to wallet</td></tr>
-            <tr><td>4</td><td>Transfer/Use</td><td>User transfers, pays merchants, or holds GHST</td></tr>
-            <tr><td>5</td><td>Redemption (Burn)</td><td>GHST burned; GHS disbursed to bank or mobile money</td></tr>
-          </table>
-
-          <h2>7. Supported Networks</h2>
-          <p>GHST is currently live on the <strong>Base</strong> network (Ethereum L2) with plans to expand to the <strong>Stellar</strong> network. Multi-chain support enables broader accessibility and interoperability with the global stablecoin ecosystem, including USDC, EURC, and 475,000+ access points worldwide.</p>
-
-          <h2>8. Risk Management</h2>
-          <p>The GHST risk framework addresses liquidity risk (20% minimum cash buffer), technology risk (Stellar's 99.99% uptime, Fireblocks MPC), regulatory risk (proactive BoG engagement), cybersecurity risk (defense-in-depth architecture), and credit risk (sovereign-backed investments).</p>
-
-          <h2>9. Roadmap</h2>
-          <table class="wp-table">
-            <tr><th>Phase</th><th>Timeline</th><th>Activities</th></tr>
-            <tr><td>1 &mdash; Regulatory</td><td>Q1 2026</td><td>Bank of Ghana application, sandbox admission</td></tr>
-            <tr><td>2 &mdash; Sandbox</td><td>Q2 2026</td><td>Controlled pilot with 500-1,000 participants</td></tr>
-            <tr><td>3 &mdash; Pilot</td><td>Q3 2026</td><td>Expanded pilot with merchants and remittance corridors</td></tr>
-            <tr><td>4 &mdash; Launch</td><td>Q4 2026</td><td>Full commercial launch with public onboarding</td></tr>
-            <tr><td>5 &mdash; Expansion</td><td>2027+</td><td>Multi-chain expansion, AfCFTA corridors, DeFi integrations</td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- ================================================================ -->
-<!-- ECOSYSTEM PAGE -->
-<!-- ================================================================ -->
-<div class="page" id="page-ecosystem">
-  <div class="eco-hero">
-    <div class="container">
-      <div class="section-label">Ecosystem</div>
-      <h1 style="color:var(--white)">Get GHST. Use GHST. Build with GHST.</h1>
-      <p>Discover where to buy, sell, and use GHST across a growing ecosystem of partners, exchanges, and applications.</p>
-    </div>
-  </div>
-
-  <section class="section" style="padding-top:0">
-    <div class="container">
-      <div class="eco-categories">
-        <div class="eco-cat active">
-          <div class="eco-cat-icon">&#128184;</div>
-          <h4>Buy &amp; Sell</h4>
-          <p>Exchanges &amp; on-ramps</p>
-        </div>
-        <div class="eco-cat">
-          <div class="eco-cat-icon">&#128241;</div>
-          <h4>Wallets &amp; Apps</h4>
-          <p>Store &amp; manage GHST</p>
-        </div>
-        <div class="eco-cat">
-          <div class="eco-cat-icon">&#128736;</div>
-          <h4>Integrations</h4>
-          <p>Business &amp; developer tools</p>
-        </div>
-      </div>
-
-      <!-- Buy & Sell -->
-      <div class="eco-listing">
-        <h3>&#128184; Exchanges &amp; On-Ramps</h3>
-        <div class="eco-grid">
-          <div class="eco-card">
-            <div class="eco-icon">&#128179;</div>
-            <div class="eco-info">
-              <h4>WeWire</h4>
-              <p>Official distribution partner. Buy and sell GHST directly via bank transfer or mobile money in Ghana.</p>
-              <div class="eco-tags"><span class="eco-tag">On-Ramp</span><span class="eco-tag">Off-Ramp</span><span class="eco-tag">Ghana</span></div>
-            </div>
-          </div>
-          <div class="eco-card">
-            <div class="eco-icon">&#128178;</div>
-            <div class="eco-info">
-              <h4>Stellar DEX</h4>
-              <p>Trade GHST on the Stellar Decentralized Exchange with any Stellar-compatible wallet. Coming with Stellar launch.</p>
-              <div class="eco-tags"><span class="eco-tag">DEX</span><span class="eco-tag">Stellar</span></div>
-            </div>
-          </div>
-          <div class="eco-card">
-            <div class="eco-icon">&#127974;</div>
-            <div class="eco-info">
-              <h4>Mobile Money On-Ramp</h4>
-              <p>Buy GHST directly with MTN MoMo, Vodafone Cash, or AirtelTigo Money through the Cede Stable app.</p>
-              <div class="eco-tags"><span class="eco-tag">MoMo</span><span class="eco-tag">Instant</span></div>
-            </div>
-          </div>
-          <div class="eco-card">
-            <div class="eco-icon">&#128142;</div>
-            <div class="eco-info">
-              <h4>Uniswap (Base)</h4>
-              <p>Swap GHST on the Base network via Uniswap. Pair with USDC, ETH, and other Base ecosystem tokens.</p>
-              <div class="eco-tags"><span class="eco-tag">DEX</span><span class="eco-tag">Base</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Wallets -->
-      <div class="eco-listing" style="margin-top:3rem">
-        <h3>&#128241; Wallets &amp; Apps</h3>
-        <div class="eco-grid">
-          <div class="eco-card">
-            <div class="eco-icon">&#128274;</div>
-            <div class="eco-info">
-              <h4>Cede Stable Wallet</h4>
-              <p>Official GHST wallet with built-in KYC, instant mint/redeem, and support for both Base and Stellar networks.</p>
-              <div class="eco-tags"><span class="eco-tag">Official</span><span class="eco-tag">iOS</span><span class="eco-tag">Android</span></div>
-            </div>
-          </div>
-          <div class="eco-card">
-            <div class="eco-icon">&#128640;</div>
-            <div class="eco-info">
-              <h4>Stellar-Compatible Wallets</h4>
-              <p>Use GHST with any Stellar wallet including Lobstr, StellarTerm, and Solar. Coming with Stellar network launch.</p>
-              <div class="eco-tags"><span class="eco-tag">Stellar</span><span class="eco-tag">Multi-Wallet</span></div>
-            </div>
-          </div>
-          <div class="eco-card">
-            <div class="eco-icon">&#129302;</div>
-            <div class="eco-info">
-              <h4>MetaMask / Base Wallets</h4>
-              <p>Add GHST token on Base network to MetaMask, Coinbase Wallet, or any EVM-compatible wallet.</p>
-              <div class="eco-tags"><span class="eco-tag">Base</span><span class="eco-tag">EVM</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Integrations -->
-      <div class="eco-listing" style="margin-top:3rem">
-        <h3>&#128736; Business &amp; Developer Integrations</h3>
-        <div class="eco-grid">
-          <div class="eco-card">
-            <div class="eco-icon">&#9997;</div>
-            <div class="eco-info">
-              <h4>Merchant API</h4>
-              <p>Accept GHST payments in your store or app. Easy-to-integrate REST API with webhook notifications for instant settlement.</p>
-              <div class="eco-tags"><span class="eco-tag">API</span><span class="eco-tag">Merchants</span></div>
-            </div>
-          </div>
-          <div class="eco-card">
-            <div class="eco-icon">&#128640;</div>
-            <div class="eco-info">
-              <h4>Remittance SDK</h4>
-              <p>Build remittance corridors powered by GHST. White-label solution for money transfer operators targeting Ghana.</p>
-              <div class="eco-tags"><span class="eco-tag">SDK</span><span class="eco-tag">Remittance</span></div>
-            </div>
-          </div>
-          <div class="eco-card">
-            <div class="eco-icon">&#128200;</div>
-            <div class="eco-info">
-              <h4>DeFi Protocols</h4>
-              <p>Use GHST in lending, borrowing, and yield generation protocols &mdash; all denominated in Ghana Cedis.</p>
-              <div class="eco-tags"><span class="eco-tag">DeFi</span><span class="eco-tag">Yield</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-banner">
-    <h2>Start using the digital Cedi today.</h2>
-    <p>Whether you're sending money home, accepting payments, or building the next great fintech app &mdash; GHST is ready.</p>
-    <a href="#" class="btn btn-primary">Get Started &rarr;</a>
-  </section>
-</div>
-
-<!-- ========== FOOTER ========== -->
-<footer class="footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="nav-logo" style="color:var(--white)">
-        <div class="logo-icon">GH</div>
-        GHST
-      </div>
-      <p>The Ghana Cedis Token &mdash; a fiat-backed digital representation of the Ghana Cedi. Fully backed, fully regulated, built for Africa.</p>
-      <p style="margin-top:1rem;font-size:0.8rem;color:var(--gray-500)">A product of <strong style="color:var(--gray-400)">Cede Stable LTD</strong></p>
-    </div>
-    <div>
-      <h4>Product</h4>
-      <ul>
-        <li><a href="#" onclick="showPage('transparency');return false">Transparency</a></li>
-        <li><a href="#" onclick="showPage('partners');return false">Partners</a></li>
-        <li><a href="#" onclick="showPage('usecases');return false">Use Cases</a></li>
-        <li><a href="#" onclick="showPage('whitepaper');return false">Whitepaper</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Ecosystem</h4>
-      <ul>
-        <li><a href="#" onclick="showPage('ecosystem');return false">Get GHST</a></li>
-        <li><a href="#">Developers</a></li>
-        <li><a href="#">Merchant API</a></li>
-        <li><a href="#">Brand Assets</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Company</h4>
-      <ul>
-        <li><a href="#">About Cede Stable</a></li>
-        <li><a href="#">Compliance</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Service</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>&copy; 2026 Cede Stable LTD. All rights reserved.</span>
-    <span>Base Contract: 0x2094656c...513fbb</span>
-  </div>
-</footer>
-
-<script>
-// ========== PAGE NAVIGATION ==========
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
-    a.classList.toggle('active', a.dataset.page === page);
-  });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  // Close mobile nav
-  document.getElementById('navLinks').classList.remove('open');
-}
-
-// ========== SCROLL NAV ==========
-window.addEventListener('scroll', () => {
-  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
-});
-// Set scrolled on load
-document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
-
-// ========== MOBILE NAV ==========
-function toggleNav() {
-  document.getElementById('navLinks').classList.toggle('open');
-}
-
-// ========== ECOSYSTEM CATEGORY TABS ==========
-document.querySelectorAll('.eco-cat').forEach(cat => {
-  cat.addEventListener('click', () => {
-    document.querySelectorAll('.eco-cat').forEach(c => c.classList.remove('active'));
-    cat.classList.add('active');
-  });
-});
-</script>
+<body data-density="airy">
+  <div id="root"></div>
+  <script defer src="dist/home.js"></script>
 </body>
 </html>

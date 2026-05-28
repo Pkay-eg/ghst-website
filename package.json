@@ -1,0 +1,29 @@
+{
+  "name": "ghst-website",
+  "version": "1.0.0",
+  "description": "Official website for the Ghana Cedis Token (GHST), a fiat-backed digital representation of the Ghana Cedi built on blockchain infrastructure.",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify",
+    "watch:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pkay-eg/ghst-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pkay-eg/ghst-website/issues"
+  },
+  "homepage": "https://github.com/pkay-eg/ghst-website#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "esbuild": "^0.25.12",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.2.2"
+  }
+}

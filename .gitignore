@@ -1,0 +1,35 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*_backup.*
+
+# Node (for future use)
+node_modules/
+package-lock.json
+
+# Build output
+build/
+.build/
+
+# Design exports not needed for the live site
+GHST Website/uploads/
+GHST Website/screenshots/
+GHST Website/.thumbnail
+
+# Legacy HTML snapshots (optional local copies)
+GHST_Website_v2.html
+GHST_Website_v3.html
+
+# Environment
+.env
+.env.local
+.env.production
