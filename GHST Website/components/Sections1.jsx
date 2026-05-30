@@ -38,10 +38,6 @@ function Hero() {
       <div className="container">
         <div className="hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow-pill">
-              <span className="live-dot" aria-hidden />
-              Live on Base · 1:1 with the Ghana Cedi
-            </div>
             <h1 className="display display-xl">
               The Ghana Cedi,<br />
               <em>onchain.</em>
