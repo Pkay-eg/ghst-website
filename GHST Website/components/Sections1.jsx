@@ -113,7 +113,9 @@ function PartnerStrip() {
   const items = [
   { name: "WeWire", domain: "wewire.com", url: "https://www.wewire.com" },
   { name: "Obiex", domain: "obiex.finance", url: "https://obiex.finance" },
-  { name: "BitAfrika", domain: "bitafrika.com", url: "https://bitafrika.com" }];
+  { name: "BitAfrika", domain: "bitafrika.com", url: "https://bitafrika.com" },
+  { name: "AFri", logo: "assets/afri-logo.png", url: "#" },
+  { name: "Mansu", logo: "assets/mansu-logo.png", url: "#" }];
 
   return (
     <section className="partner-strip">
@@ -124,7 +126,7 @@ function PartnerStrip() {
           <a className="partner" key={i} href={p.url} target="_blank" rel="noreferrer">
               <img
               className="partner-mark"
-              src={`https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`}
+              src={p.logo || `https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`}
               alt=""
               aria-hidden
               loading="lazy" />
