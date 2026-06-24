@@ -117,13 +117,24 @@ function PartnerStrip() {
   { name: "AFri", logo: "assets/afri-logo.png", url: "#" },
   { name: "Mansu", logo: "assets/mansu-logo.png", url: "#" }];
 
+  const loop = [...items, ...items];
+
   return (
     <section className="partner-strip">
       <div className="container">
         <div className="partner-strip-label">Built with partners across West Africa</div>
-        <div className="partner-grid">
-          {items.map((p, i) =>
-          <a className="partner" key={i} href={p.url} target="_blank" rel="noreferrer">
+      </div>
+      <div className="partner-marquee">
+        <div className="partner-track" aria-hidden={false}>
+          {loop.map((p, i) =>
+          <a
+            className="partner"
+            key={i}
+            href={p.url}
+            target="_blank"
+            rel="noreferrer"
+            aria-hidden={i >= items.length ? true : undefined}
+            tabIndex={i >= items.length ? -1 : undefined}>
               <img
               className="partner-mark"
               src={p.logo || `https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`}
