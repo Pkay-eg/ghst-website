@@ -373,9 +373,8 @@ img { display: block; max-width: 100%; }
   display: flex;
   width: max-content;
   align-items: center;
-  gap: clamp(40px, 6vw, 80px);
   padding-block: 4px;
-  animation: partner-scroll 32s linear infinite;
+  animation: partner-scroll 36s linear infinite;
   will-change: transform;
 }
 .partner-marquee:hover .partner-track { animation-play-state: paused; }
@@ -391,6 +390,7 @@ img { display: block; max-width: 100%; }
   color: var(--ink); opacity: 0.7;
   letter-spacing: -0.025em;
   flex-shrink: 0;
+  margin-inline-end: clamp(72px, 11vw, 168px);
   transition: opacity var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
 .partner:hover { opacity: 1; color: var(--ink); }
