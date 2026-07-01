@@ -184,7 +184,7 @@ function AboutCTA() {
               We're hiring across engineering, operations, and compliance. If you want to help build digital financial infrastructure for Ghana and West Africa, get in touch.
             </p>
             <div className="cta-actions">
-              <a href="Contact.html" className="btn btn-cream">Contact the team <ArrowRight /></a>
+              <a href="/Contact" className="btn btn-cream">Contact the team <ArrowRight /></a>
             </div>
           </div>
           <div className="cta-aside">

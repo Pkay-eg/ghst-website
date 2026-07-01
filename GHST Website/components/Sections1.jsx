@@ -7,10 +7,10 @@ const WEWIRE_URL = "https://www.wewire.com";
 // ─── NAV ───
 function Nav() {
   const path = typeof window !== 'undefined' ? window.location.pathname : '';
-  const onAbout = /About\.html/i.test(path);
-  const onContact = /Contact\.html/i.test(path);
+  const onAbout = /About/i.test(path);
+  const onContact = /Contact/i.test(path);
   const onSubpage = onAbout || onContact;
-  const homeHref = onSubpage ? "GHST%20Landing.html" : "#";
+  const homeHref = onSubpage ? "/" : "#";
   return (
     <header className="nav">
       <div className="container nav-inner">
@@ -20,8 +20,8 @@ function Nav() {
         </a>
         <nav className="nav-links">
           <a href={homeHref}>Home</a>
-          <a href="About.html">About</a>
-          <a href="Contact.html">Contact</a>
+          <a href="/About">About</a>
+          <a href="/Contact">Contact</a>
         </nav>
         <div className="nav-actions">
           <a href={WEWIRE_URL} target="_blank" rel="noreferrer" className="nav-cta">Get GHST</a>

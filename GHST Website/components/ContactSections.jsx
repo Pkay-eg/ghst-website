@@ -112,10 +112,10 @@ ${form.message}
 
             <div className="form-actions">
               <button type="submit" className="btn btn-primary" disabled={!valid}>
-                Send to {CONTACT_EMAIL} <ArrowRight />
+                Send message <ArrowRight />
               </button>
               <span className="form-hint">
-                {sent ? "Your email client should have opened. If not, email us directly." : "Submitting opens your email client with the message pre-filled."}
+                {sent ? "" : "Submitting opens your email client with the message pre-filled."}
               </span>
             </div>
           </form>

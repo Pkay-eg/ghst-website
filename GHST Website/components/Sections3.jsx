@@ -175,8 +175,8 @@ function CTA() {
 // ─── FOOTER ───
 function Footer() {
   const path = typeof window !== 'undefined' ? window.location.pathname : '';
-  const onSubpage = /About\.html|Contact\.html/i.test(path);
-  const home = onSubpage ? "GHST%20Landing.html" : "";
+  const onSubpage = /About|Contact/i.test(path);
+  const home = onSubpage ? "/" : "";
   const h = (frag) => onSubpage ? `${home}${frag}` : frag;
   return (
     <footer className="footer">
@@ -199,8 +199,8 @@ function Footer() {
           </div>
           <div className="footer-col">
             <h4>Company</h4>
-            <a href="About.html">About</a>
-            <a href="Contact.html">Contact</a>
+            <a href="/About">About</a>
+            <a href="/Contact">Contact</a>
           </div>
           <div className="footer-col">
             <h4>Partners</h4>
