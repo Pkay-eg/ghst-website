@@ -48,6 +48,9 @@ const CROSS_IMPORTS = {
   "AboutSections.jsx": {
     "./Icons.jsx": ["ArrowRight"],
   },
+  "ContactSections.jsx": {
+    "./Icons.jsx": ["ArrowRight"],
+  },
 };
 
 function parseObjectAssignExports(source) {
