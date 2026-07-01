@@ -1,53 +1,36 @@
-# GHST — Ghana Cedis Token Website
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Official website for the Ghana Cedis Token (GHST), a fiat-backed digital representation of the Ghana Cedi built on blockchain infrastructure.
+## Getting Started
 
-**Issuer:** Cede Stable LTD
-**Distribution Partner:** WeWire
-**Networks:** Base (live), Stellar (coming soon)
-**Base Contract:** `0x2094656c30C064EFae86C1fA1b87DdAB1f513fbb`
-
-## Pages
-
-- **Home** — Hero, key stats, how-it-works, and feature overview
-- **Transparency** — Circulating supply, reserve composition, attestation reports, contract addresses
-- **Partners** — Banking (Omni Bank), audit (BNA Ghana), asset management (Constants Capital), technology (Fireblocks, Chainalysis, Stellar), distribution (WeWire)
-- **Use Cases** — Remittances, merchant payments, government disbursements, supply chain, AfCFTA trade, treasury, DeFi
-- **Whitepaper** — Full readable whitepaper with download option
-- **Ecosystem** — Where to buy/sell GHST, supported wallets, developer integrations
-
-## Design System
-
-Built with the GHST Figma design system:
-
-- **Primary:** `#785AFF` (Purple)
-- **Accent colors:** `#FF5700` (Orange), `#007D6F` (Green), `#0D72FF` (Blue)
-- **Typography:** Inter Tight (headings), Inter (body)
-- **Dark surfaces:** `#1A1A2E`, `#2D2B55`
-- **Light background:** `#F2EFFF`
-
-## Development
-
-Multi-page static site built from the design in `GHST Website/`.
+First, run the development server:
 
 ```bash
-npm install
-npm run build
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-This generates `index.html`, `About.html`, `Contact.html`, and pre-compiled bundles in `dist/`.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Open `index.html` in a browser, or serve the repo root with any static file server.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Deployment (GitHub Pages)
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-The site is hosted on GitHub Pages from the `main` branch (repo root).
+## Learn More
 
-- **Project URL:** https://pkay-eg.github.io/ghst-website/
-- After adding a custom domain in GitHub → Settings → Pages, point DNS at GitHub (see below).
+To learn more about Next.js, take a look at the following resources:
 
-Always run `npm run build` before pushing so `dist/*.js` matches the latest components.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## License
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Proprietary — Cede Stable LTD. All rights reserved.
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

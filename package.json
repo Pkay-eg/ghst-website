@@ -1,29 +1,26 @@
 {
-  "name": "ghst-website",
-  "version": "1.0.0",
-  "description": "Official website for the Ghana Cedis Token (GHST), a fiat-backed digital representation of the Ghana Cedi built on blockchain infrastructure.",
-  "main": "index.js",
+  "name": "ghst-website-next",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build": "node build.js",
-    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify",
-    "watch:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pkay-eg/ghst-website.git"
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.6",
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "^4.4.3"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/pkay-eg/ghst-website/issues"
-  },
-  "homepage": "https://github.com/pkay-eg/ghst-website#readme",
   "devDependencies": {
-    "@tailwindcss/cli": "^4.2.2",
-    "esbuild": "^0.25.12",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "tailwindcss": "^4.2.2"
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "typescript": "^5"
   }
 }
